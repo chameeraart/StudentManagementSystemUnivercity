@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-3"></div>
+                <!--/.col (left) -->
+                <!--/.col (middle) -->
+                <div class="col-md-6">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Add Subject</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form>
+                            <input type="hidden" class="form-control" id="subjectId" value="0" />
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="subjectName">Subject Name</label>
+                                    <input type="text" class="form-control" id="subjectName" placeholder="Enter Subject name" autocomplete="off">
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="isActive" checked="">
+                                    <label class="form-check-label" for="isActive">Active</label>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" id="savebtn" onclick="saveSubject()" class="btn btn-primary me-2">Save</button>
+                                    <button type="button" id="clearbtn" onclick="clearSubject()" class="btn btn-danger">Clear</button>
+                                </div>
+                            </div>
+
+                            
+                        </form>
+                    </div>
+                    <!-- /.card -->
+                    <!-- general form elements -->
+                </div>
+                <!--/.col (middle) -->
+                <!--/.col (right) -->
+                <div class="col-md-3"></div>
+                <!--/.col (right) -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title">Saved Subject</h6>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap" id="tableID">
+                                <thead>
+                                    <tr>
+                                        <th hidden="hidden">Subject Id</th>
+                                        <th>Subject Name</th>
+                                        <th>Active</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyid"></tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+</div>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/subject.js"></script>
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

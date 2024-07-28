@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <!-- Main column -->
+                <div class="col-md-6">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Add Grade</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form>
+                            <input type="hidden" class="form-control" id="gradeId" value="0" />
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="gradeName">Grade Name</label>
+                                    <input type="text" class="form-control" id="gradeName" placeholder="Enter Grade name" autocomplete="off">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gradeRemark">Remark</label>
+                                    <input type="text" class="form-control" id="gradeRemark" placeholder="Enter Remark" autocomplete="off">
+                                </div>
+
+                                <div class="form-check mb-3">
+                                    <input type="checkbox" class="form-check-input" id="isActive" checked="">
+                                    <label class="form-check-label" for="isActive">Active</label>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="button" id="savebtn" onclick="saveGrade()" class="btn btn-primary me-2">Save</button>
+                                <button type="button" id="clearbtn" onclick="clearGrade()" class="btn btn-danger">Clear</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!--/.col (middle) -->
+            </div>
+
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title">Saved Grades</h6>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap" id="tableID">
+                                <thead>
+                                    <tr>
+                                        <th hidden="hidden">Grade Id</th>
+                                        <th>Grade Name</th>
+                                        <th>Grade Remark</th>
+                                        <th>Active</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyid"></tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+</div>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/grade.js"></script> <!-- Corrected syntax here -->
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+

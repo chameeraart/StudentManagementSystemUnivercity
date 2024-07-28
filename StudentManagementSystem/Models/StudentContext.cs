@@ -1,0 +1,16 @@
+﻿using Microsoft.EntityFrameworkCore;
+namespace StudentManagementSystem.Models
+{
+    public class StudentContext : DbContext
+    {
+        public StudentContext(DbContextOptions<StudentContext> options) : base(options)
+        {
+
+        }
+        public DbSet<Users> users { get; set; }
+        public DbSet<Course> courses { get; set; }
+        public DbSet<Grade> grades { get; set; }
+        public DbSet<Subject> subjects { get; set; }
+    }
+
+}
