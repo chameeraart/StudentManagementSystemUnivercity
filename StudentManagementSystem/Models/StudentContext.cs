@@ -12,6 +12,7 @@ namespace StudentManagementSystem.Models
         public DbSet<Grade> grades { get; set; }
         public DbSet<Subject> subjects { get; set; }
         public DbSet<StudentClass> classes { get; set; }
+        public DbSet<Exam> exams { get; set; }
     }
 
 }

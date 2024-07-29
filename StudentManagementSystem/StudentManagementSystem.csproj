@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\exam.js" />
     <Content Remove="wwwroot\js\grade.js" />
     <Content Remove="wwwroot\js\studentclass.js" />
     <Content Remove="wwwroot\js\subject.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\exam.js" />
     <None Include="wwwroot\js\studentclass.js" />
     <None Include="wwwroot\js\subject.js" />
     <None Include="wwwroot\js\grade.js" />

@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="text-center">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Add Exam</h3>
+                        </div>
+                        <form>
+                            <input type="hidden" class="form-control" id="examId" value="0" />
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="examName">Exam Name</label>
+                                    <input type="text" class="form-control" id="examName" placeholder="Enter Exam name" autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherName">Teacher Name</label>
+                                    <input type="text" class="form-control" id="teacherName" placeholder="Enter Teacher name" autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label for="numberOfStudents">Number of Students</label>
+                                    <input type="number" class="form-control" id="numberOfStudents" placeholder="Enter number of students">
+                                </div>
+                                <div class="form-group">
+                                    <label for="examDate">Exam Date</label>
+                                    <input type="date" class="form-control" id="examDate">
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="isActive" checked="">
+                                    <label class="form-check-label" for="isActive">Active</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" id="saveExamBtn" onclick="saveExam()" class="btn btn-primary me-2">Save</button>
+                                    <button type="button" id="clearExamBtn" onclick="clearExam()" class="btn btn-danger">Clear</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title">Saved Exams</h6>
+                        </div>
+                        <div class="card-body table-responsive p-0" id="datatable">
+                            <table class="table table-hover text-nowrap" id="examTable">
+                                <thead>
+                                    <tr>
+                                        <th hidden="hidden">Exam Id</th>
+                                        <th>Exam Name</th>
+                                        <th>Teacher Name</th>
+                                        <th>Number of Students</th>
+                                        <th>Exam Date</th>
+                                        <th>Active</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyExam"></tbody>
+                            </table>
+                            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                <!-- DataTable buttons will be appended here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables CSS and JS -->
+
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- bs-custom-file-input -->
+<script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>
+
+<script src="/js/exam.js"></script>
