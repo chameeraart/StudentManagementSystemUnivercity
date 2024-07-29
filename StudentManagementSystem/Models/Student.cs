@@ -49,29 +49,8 @@ namespace StudentManagementSystem.Models
         [Display(Name = "Telephone")]
         public string Telephone { get; set; }
 
-        [DataType(DataType.Date)]
-        [Display(Name = "Admission Date")]
-        public DateTime AdmissionDate { get; set; }
-
-        [Required]
-        [Display(Name = "Admission Grade")]
-        public string AdmissionGrade { get; set; }
-
-        [Required]
-        [Display(Name = "Current Grade")]
-        public string CurrentGrade { get; set; }
-
-        [Display(Name = "Final Grade")]
-        public string FinalGrade { get; set; }
-
-        [Display(Name = "Final Year")]
-        public string FinalYear { get; set; }
-
         [Display(Name = "Comments")]
         public string Comments { get; set; }
-
-        [Display(Name = "Birth Certificate Number")]
-        public string BirthCertificateNumber { get; set; }
         public string PhotoPath { get; set; }
 
         public DateTime created_at { get; set; }

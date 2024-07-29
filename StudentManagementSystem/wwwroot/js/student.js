@@ -70,6 +70,7 @@ function saveStudent() {
     var telephone = $('#Telephone').val();
     var isActive = $('#active').is(':checked');
     var photo = $('#file')[0].files[0];
+    var comment = $('#comments').val();
 
     var formData = new FormData();
     formData.append('Index', id);
@@ -82,6 +83,7 @@ function saveStudent() {
     formData.append('GuardianName', guardianName);
     formData.append('GuardianEmail', guardianEmail);
     formData.append('Telephone', telephone);
+    formData.append('Comments', comment);
     formData.append('IsActive', isActive);
     if (photo) {
         formData.append('Photo', photo);
@@ -190,6 +192,7 @@ function clearStudentForm() {
     $('#Telephone').val('');
     $('#active').prop('checked', false);
     $('#file').val('');
+    $('#comments').val('');
     $('#imageSrc').attr('src', '').hide();
 }
 

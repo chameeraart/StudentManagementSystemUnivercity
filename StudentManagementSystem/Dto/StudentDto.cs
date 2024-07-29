@@ -17,11 +17,6 @@ namespace StudentManagementSystem.Dto
         public string GuardianEmail { get; set; }
         public string Telephone { get; set; }
         public bool IsActive { get; set; }
-        public DateTime AdmissionDate { get; set; }
-        public string AdmissionGrade { get; set; }
-        public string CurrentGrade { get; set; }
-        public string FinalGrade { get; set; }
-        public string FinalYear { get; set; }
         public string Comments { get; set; }
         public string BirthCertificateNumber { get; set; }
         public IFormFile Photo { get; set; }

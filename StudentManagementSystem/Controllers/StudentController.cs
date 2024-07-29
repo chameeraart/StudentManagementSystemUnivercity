@@ -42,7 +42,7 @@ namespace StudentManagementSystem.Controllers
         {
             var student = new Student
             {
-                Index = studentDto.Index,
+                Index = "1",
                 FullName = studentDto.FullName,
                 NameWithInitials = studentDto.NameWithInitials,
                 DateOfBirth = studentDto.DateOfBirth,
@@ -53,13 +53,7 @@ namespace StudentManagementSystem.Controllers
                 GuardianEmail = studentDto.GuardianEmail,
                 Telephone = studentDto.Telephone,
                 isactive = studentDto.IsActive,
-                AdmissionDate = studentDto.AdmissionDate,
-                AdmissionGrade = studentDto.AdmissionGrade,
-                CurrentGrade = studentDto.CurrentGrade,
-                FinalGrade = studentDto.FinalGrade,
-                FinalYear = studentDto.FinalYear,
                 Comments = studentDto.Comments,
-                BirthCertificateNumber = studentDto.BirthCertificateNumber,
                 created_at = DateTime.Now,
                 created_by = 1 // Replace with actual user ID
             };
@@ -90,7 +84,7 @@ namespace StudentManagementSystem.Controllers
             {
                 return NotFound();
             }
-
+            student.Index = "1";
             student.FullName = studentDto.FullName;
             student.NameWithInitials = studentDto.NameWithInitials;
             student.DateOfBirth = studentDto.DateOfBirth;
@@ -101,13 +95,7 @@ namespace StudentManagementSystem.Controllers
             student.GuardianEmail = studentDto.GuardianEmail;
             student.Telephone = studentDto.Telephone;
             student.isactive = studentDto.IsActive;
-            student.AdmissionDate = studentDto.AdmissionDate;
-            student.AdmissionGrade = studentDto.AdmissionGrade;
-            student.CurrentGrade = studentDto.CurrentGrade;
-            student.FinalGrade = studentDto.FinalGrade;
-            student.FinalYear = studentDto.FinalYear;
             student.Comments = studentDto.Comments;
-            student.BirthCertificateNumber = studentDto.BirthCertificateNumber;
             student.updated_at = DateTime.Now;
             student.updated_by = 1; // Replace with actual user ID
 
