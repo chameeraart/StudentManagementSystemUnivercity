@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\js\grade.js" />
+    <Content Remove="wwwroot\js\studentclass.js" />
     <Content Remove="wwwroot\js\subject.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\studentclass.js" />
     <None Include="wwwroot\js\subject.js" />
     <None Include="wwwroot\js\grade.js" />
     <None Include="wwwroot\js\courses.js" />
@@ -25,6 +27,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Pages\Class.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
