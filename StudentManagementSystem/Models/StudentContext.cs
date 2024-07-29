@@ -13,6 +13,8 @@ namespace StudentManagementSystem.Models
         public DbSet<Subject> subjects { get; set; }
         public DbSet<StudentClass> classes { get; set; }
         public DbSet<Exam> exams { get; set; }
+
+        public DbSet<Student> students { get; set; }
     }
 
 }

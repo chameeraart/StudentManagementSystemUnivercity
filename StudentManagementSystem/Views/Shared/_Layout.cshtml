@@ -81,7 +81,7 @@
                         <img src="~/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block" id="username">Alexander Pierce</a>
+          <a href="#" class="d-block" id="username"></a>
         </div>
       </div>
 
@@ -147,6 +147,16 @@
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Exam
+                                    @* <span class="right badge badge-danger">New</span> *@
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Student" asp-action="Index" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Student
                                     @* <span class="right badge badge-danger">New</span> *@
                                 </p>
                             </a>

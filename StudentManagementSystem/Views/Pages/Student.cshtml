@@ -1,0 +1,152 @@
+﻿@{
+    ViewData["Title"] = "Add Student Details";
+}
+
+<div class="container mt-5">
+    <form id="studentForm" enctype="multipart/form-data">
+        <h4 class="mb-4 text-muted">Add Student Details</h4>
+        <div class="row">
+            <div class="col-md-12 col-lg-6 mb-4">
+                <div class="card border-0 rounded-0 h-100">
+                    <div class="card-title mb-1 p-3">
+                        <h5>Basic Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="index">Index Number</label>
+                            <input type="text" class="form-control rounded-0" id="index" required placeholder="Enter Index Number" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="fname">Full Name</label>
+                            <input type="text" class="form-control rounded-0" id="fname" placeholder="Enter Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nameini">Name With Initials</label>
+                            <input type="text" class="form-control rounded-0" id="nameini" required placeholder="Enter Name with Initials">
+                        </div>
+                        <div class="form-group">
+                            <label for="Dob">Date Of Birth</label>
+                            <input type="date" class="form-control rounded-0" id="Dob" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" class="form-control rounded-0" required>
+                                <option value="" disabled selected>Select One</option>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sEmail">Student Email</label>
+                            <input type="text" class="form-control rounded-0" id="sEmail" placeholder="Enter Email Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="file">Select Student's Image</label>
+                            <input type="file" class="form-control rounded-0" id="file" accept="image/*" onchange="previewImage(event)">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Student's Image</label>
+                            <div class="thumbnail text-center">
+                                <img id="imageSrc" src="" alt="Student Image" class="img-fluid" style="display: none; max-width: 200px; max-height: 150px;">
+                                <button type="button" class="btn btn-sm btn-outline-secondary mt-2" onclick="clearFile()">Clear File</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6 mb-4">
+                <div class="card border-0 rounded-0 h-100">
+                    <div class="card-title mb-1 p-3">
+                        <h5>Contact Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control rounded-0" id="address" required placeholder="Enter Address">
+                        </div>
+                        <div class="form-group">
+                            <label for="guardian">Guardian</label>
+                            <input type="text" class="form-control rounded-0" id="guardian" required placeholder="Enter Guardian's Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Guardian Email</label>
+                            <input type="email" class="form-control rounded-0" id="Email" minlength="10" maxlength="10" placeholder="Enter Guardian Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="Telephone">Telephone</label>
+                            <input type="text" class="form-control rounded-0" id="Telephone" minlength="10" maxlength="10" placeholder="Enter Telephone Number">
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="active">
+                                <label class="custom-control-label" for="active">Active Status</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="float-right">
+                <button type="button" class="btn btn-outline-primary rounded-0" onclick="clearStudentForm()">Clear</button>
+                <button type="button" class="btn btn-primary rounded-0" onclick="saveStudent()">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const image = document.getElementById('imageSrc');
+                image.src = e.target.result;
+                image.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function clearFile() {
+        document.getElementById('file').value = '';
+        const image = document.getElementById('imageSrc');
+        image.src = '';
+        image.style.display = 'none';
+    }
+</script>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables CSS and JS -->
+
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- bs-custom-file-input -->
+<script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<!-- Sweet Alert -->
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>
+
+<script src="/js/student.js"></script>
