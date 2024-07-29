@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
-    loadStudentTable();
+ /*   loadStudentTable();*/
+    getNextStudentIndex();
 });
 
 function validateStudentForm() {
@@ -140,26 +141,17 @@ function loadStudentTable() {
     });
 }
 
-function getStudent(studentId) {
+
+function getNextStudentIndex() {
     $.ajax({
-        url: '/student/get/' + studentId,
+        url: '/student/Getnext', // Adjust the URL to match your route
         type: 'GET',
-        success: function (response) {
-            $('#index').val(response.index);
-            $('#fname').val(response.fullName);
-            $('#nameini').val(response.nameWithInitials);
-            $('#Dob').val(formatDate(response.dateOfBirth));
-            $('#gender').val(response.gender);
-            $('#sEmail').val(response.studentEmail);
-            $('#address').val(response.address);
-            $('#guardian').val(response.guardianName);
-            $('#Email').val(response.guardianEmail);
-            $('#Telephone').val(response.telephone);
-            $('#active').prop('checked', response.isActive);
-            // Photo handling can be done if required
+        success: function (data) {
+            $('#index').val(data.nextno);
         },
-        error: function (err) {
-            console.error('Error fetching student:', err);
+        error: function (xhr, status, error) {
+            // Handle any errors here
+            console.error("An error occurred: " + error);
         }
     });
 }

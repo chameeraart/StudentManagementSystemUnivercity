@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentManagementSystem.Dto;
 using StudentManagementSystem.Models;
@@ -130,6 +131,20 @@ namespace StudentManagementSystem.Controllers
             await Context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+
+
+        public IActionResult Getnext()
+        {
+            var stuendent = Context.students.Count();
+            int newno = Convert.ToInt32(stuendent) + 1;
+            StudentIndexNoDto g = new StudentIndexNoDto();
+            g.Id = 1;
+
+            g.Nextno = "S-" + newno.ToString();
+
+            return new ObjectResult(g);
         }
 
     }
