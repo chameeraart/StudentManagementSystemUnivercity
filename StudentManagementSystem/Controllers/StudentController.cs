@@ -43,7 +43,7 @@ namespace StudentManagementSystem.Controllers
         {
             var student = new Student
             {
-                Index = "1",
+                Index = studentDto.Index,
                 FullName = studentDto.FullName,
                 NameWithInitials = studentDto.NameWithInitials,
                 DateOfBirth = studentDto.DateOfBirth,
@@ -85,7 +85,7 @@ namespace StudentManagementSystem.Controllers
             {
                 return NotFound();
             }
-            student.Index = "1";
+            student.Index = student.Index;
             student.FullName = studentDto.FullName;
             student.NameWithInitials = studentDto.NameWithInitials;
             student.DateOfBirth = studentDto.DateOfBirth;

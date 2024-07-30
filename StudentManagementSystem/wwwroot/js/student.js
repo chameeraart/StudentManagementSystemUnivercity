@@ -58,8 +58,8 @@ function saveStudent() {
     if (!validateStudentForm()) {
         return; // Stop execution if validation fails
     }
-
-    var id = $('#index').val(); // Assuming ID is the Index Number
+    var id = $('#studentId').val();
+    var index = $('#index').val(); // Assuming ID is the Index Number
     var fullName = $('#fname').val();
     var nameWithInitials = $('#nameini').val();
     var dob = $('#Dob').val();
@@ -74,7 +74,8 @@ function saveStudent() {
     var comment = $('#comments').val();
 
     var formData = new FormData();
-    formData.append('Index', id);
+    formData.append('id', id);
+    formData.append('Index', index);
     formData.append('FullName', fullName);
     formData.append('NameWithInitials', nameWithInitials);
     formData.append('DateOfBirth', dob);
@@ -90,7 +91,7 @@ function saveStudent() {
         formData.append('Photo', photo);
     }
 
-    var url = id ? '/student/update' : '/student/create'; // Adjust URL as needed
+    var url =  '/student/create'; // Adjust URL as needed
     console.log('formData', formData)
     $.ajax({
         url: url,
@@ -102,6 +103,7 @@ function saveStudent() {
             swal("Success", "Student details saved successfully!", "success");
             clearStudentForm();
             loadStudentTable(); // Refresh the table after saving
+            getNextStudentIndex();
         },
         error: function (err) {
             console.error('Error saving student:', err);
@@ -172,6 +174,7 @@ function deleteStudent(studentId) {
 }
 
 function clearStudentForm() {
+    $('#studentId').val('');
     $('#index').val('');
     $('#fname').val('');
     $('#nameini').val('');
