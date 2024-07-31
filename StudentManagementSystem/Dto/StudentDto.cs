@@ -4,6 +4,7 @@ namespace StudentManagementSystem.Dto
 {
     public class StudentDto
     {
+        public int id { get; set; }
         public string Index { get; set; }
         public string FullName { get; set; }
         public string NameWithInitials { get; set; }

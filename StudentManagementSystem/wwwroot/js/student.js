@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
- /*   loadStudentTable();*/
+    loadStudentTable();
     getNextStudentIndex();
 });
 
@@ -58,6 +58,9 @@ function saveStudent() {
     if (!validateStudentForm()) {
         return; // Stop execution if validation fails
     }
+
+    var url = "";
+    var photo = "";
     var id = $('#studentId').val();
     var index = $('#index').val(); // Assuming ID is the Index Number
     var fullName = $('#fname').val();
@@ -70,9 +73,16 @@ function saveStudent() {
     var guardianEmail = $('#Email').val();
     var telephone = $('#Telephone').val();
     var isActive = $('#active').is(':checked');
-    var photo = $('#file')[0].files[0];
     var comment = $('#comments').val();
-
+    if (id === 0 || id === undefined) {
+        
+        photo = $('#file')[0].files[0];
+        console.log('insert', photo)
+    }
+    else {
+        photo = $('#imageSrc').attr('src');
+        console.log('update', photo)
+    }
     var formData = new FormData();
     formData.append('id', id);
     formData.append('Index', index);
@@ -87,12 +97,14 @@ function saveStudent() {
     formData.append('Telephone', telephone);
     formData.append('Comments', comment);
     formData.append('IsActive', isActive);
-    if (photo) {
-        formData.append('Photo', photo);
-    }
+    formData.append('Photo', photo);
+    
 
-    var url =  '/student/create'; // Adjust URL as needed
-    console.log('formData', formData)
+    if (id === 0 || id === undefined) {
+        url = '/student/create'; // Insert URL
+    } else {
+        url = '/student/update'; // Update URL
+    }
     $.ajax({
         url: url,
         type: "POST",
@@ -118,21 +130,19 @@ function loadStudentTable() {
         success: function (response) {
             var tbody = $('#tbodyStudent');
             tbody.empty(); // Clear the table body
+            console.log('response', response);
             response.forEach(function (student) {
                 var row = `<tr>
-                    <td hidden>${student.index}</td>
+                    <td hidden>${student.id}</td>
+                    <td>${student.index}</td>
                     <td>${student.fullName}</td>
-                    <td>${student.nameWithInitials}</td>
                     <td>${formatDate(student.dateOfBirth)}</td>
                     <td>${student.gender}</td>
                     <td>${student.studentEmail}</td>
-                    <td>${student.address}</td>
-                    <td>${student.guardianName}</td>
-                    <td>${student.guardianEmail}</td>
                     <td>${student.telephone}</td>
                     <td>${student.isActive ? 'Yes' : 'No'}</td>
-                    <td><button class="btn btn-warning" onclick="getStudent('${student.index}')">Edit</button></td>
-                    <td><button class="btn btn-danger" onclick="deleteStudent('${student.index}')">Delete</button></td>
+                    <td><button class="btn btn-warning" onclick="getStudent('${student.id}')">Edit</button></td>
+                    <td><button class="btn btn-danger" onclick="deleteStudent('${student.id}')">Delete</button></td>
                 </tr>`;
                 tbody.append(row);
             });
@@ -164,7 +174,7 @@ function deleteStudent(studentId) {
         type: 'DELETE',
         success: function (response) {
             swal("Success", "Student deleted successfully!", "success");
-            loadStudentTable(); // Refresh the table after deleting
+            loadStudentTable();
             clearStudentForm();
         },
         error: function (err) {
@@ -172,6 +182,50 @@ function deleteStudent(studentId) {
         }
     });
 }
+
+function getStudent(studentId) {
+    $.ajax({
+        url: '/student/GetStudent/' + studentId, // Adjust the URL based on your API route
+        type: 'GET',
+        success: function (response) {
+            console.log('response', response)
+            // Populate the form fields with the retrieved student data
+            $('#studentId').val(response.id);
+            $('#index').val(response.index);
+            $('#fname').val(response.fullName);
+            $('#nameini').val(response.nameWithInitials);
+            $('#Dob').val(new Date(response.dateOfBirth).toISOString().split('T')[0]);
+            $('#gender').val(response.gender);
+            $('#sEmail').val(response.studentEmail);
+            $('#address').val(response.address);
+            $('#guardian').val(response.guardianName);
+            $('#Email').val(response.guardianEmail);
+            $('#Telephone').val(response.telephone);
+            $('#comments').val(response.comments);
+
+
+            if (response.photoPath) {
+              
+                // Ensure the path is correctly formatted for the browser
+                var imageUrl = response.photoPath;
+                // Ensure the path starts with a slash if needed
+                var newImageUrl = imageUrl.startsWith('/') ? imageUrl : '/' + imageUrl;
+
+                // Update the image source and make sure the image is visible
+                $('#imageSrc').attr('src', newImageUrl).show();
+                } else {
+                    $('#imageSrc').hide();
+                }
+
+            // Handle active status checkbox
+            $('#active').prop('checked', response.isactive);
+        },
+        error: function (err) {
+            console.error('Error fetching student:', err);
+        }
+    });
+}
+
 
 function clearStudentForm() {
     $('#studentId').val('');

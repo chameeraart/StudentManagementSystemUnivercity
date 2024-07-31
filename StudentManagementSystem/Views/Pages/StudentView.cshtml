@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Add Student Details";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        overflow: hidden; /* Ensure the form takes up remaining space */
+    }
+
+    .card {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-body {
+        overflow-y: auto;
+    }
+
+    #studentTable {
+        width: 100%;
+    }
+</style>
+
+<div class="container">
+    <form id="studentForm" enctype="multipart/form-data">
+        <h4 class="mb-4 text-muted">Add Student Details</h4>
+
+        <div class="row flex-grow-1">
+            <div class="col-12">
+                <div class="card shadow-sm rounded-3 h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="card-title mb-0">Saved Students</h6>
+                    </div>
+                    <div class="card-body table-responsive p-0 flex-grow-1" id="datatable">
+                        <table class="table table-hover text-nowrap" id="studentTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th hidden="hidden">Id</th>
+                                    <th>Index</th>
+                                    <th>Full Name</th>
+                                    <th>Date Of Birth</th>
+                                    <th>Gender</th>
+                                    <th>Student Email</th>
+                                    @*  <th>Address</th> *@
+                                    <th>Telephone</th>
+                                    <th>Active</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyStudent"></tbody>
+                        </table>
+                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <!-- DataTable buttons will be appended here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const image = document.getElementById('imageSrc');
+                image.src = e.target.result;
+                image.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function clearFile() {
+        document.getElementById('file').value = '';
+        const image = document.getElementById('imageSrc');
+        image.src = '';
+        image.style.display = 'none';
+    }
+</script>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables CSS and JS -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<script src="../../dist/js/adminlte.min.js"></script>
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<!-- FancyTable -->
+<script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>
+
+<!-- Custom JS -->
+<script src="/js/student.js"></script>

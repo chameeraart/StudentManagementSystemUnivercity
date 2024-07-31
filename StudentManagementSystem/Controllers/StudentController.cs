@@ -13,6 +13,11 @@ namespace StudentManagementSystem.Controllers
             return View("~/Views/Pages/Student.cshtml");
         }
 
+        public IActionResult StuduentView()
+        {
+            return View("~/Views/Pages/StudentView.cshtml");
+        }
+
         public StudentContext Context { get; }
         public StudentController(StudentContext context)
         {
@@ -21,7 +26,7 @@ namespace StudentManagementSystem.Controllers
 
         }
 
-        public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+        public async Task<ActionResult<IEnumerable<Student>>> getall()
         {
             return await Context.students.ToListAsync();
         }
@@ -29,8 +34,8 @@ namespace StudentManagementSystem.Controllers
 
         public async Task<ActionResult<Student>> GetStudent(string id)
         {
-            var student = await Context.students.FindAsync(id);
-
+            var student = await Context.students.Where(t => t.id == Convert.ToInt32(id)).FirstOrDefaultAsync();
+            student.PhotoPath = student.PhotoPath.Replace("wwwroot", "");
             if (student == null)
             {
                 return NotFound();
@@ -79,7 +84,7 @@ namespace StudentManagementSystem.Controllers
 
         public async Task<IActionResult> Update(string id, [FromForm] StudentDto studentDto)
         {
-            var student = await Context.students.FindAsync(id);
+            var student = await Context.students.Where(t => t.id == Convert.ToInt32(studentDto.id)).FirstOrDefaultAsync();
 
             if (student == null)
             {
@@ -120,7 +125,7 @@ namespace StudentManagementSystem.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            var student = await Context.students.FindAsync(id);
+            var student = await Context.students.Where(t => t.id == Convert.ToInt32(id)).FirstOrDefaultAsync();
 
             if (student == null)
             {
