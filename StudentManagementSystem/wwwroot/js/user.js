@@ -11,16 +11,14 @@
 
 function saveUser() {
     let users = {
-        id: parseInt($('#userId').val()) || 0,
+        Id: parseInt($('#userId').val()) || 0,
         username: $('#uname').val(),
         password: $('#password').val(),
-        userType: $('#userType').val(),
+        UserType: $('#userType').val(),
         companyid: parseInt($('#companyid').val()) || 0,
         property_id: parseInt($('#property_id').val()) || 0,
         isactive: $('#isActive').is(':checked')
     };
-
-    console.log('users', users);
 
     // Perform AJAX request to save user data to the server
     $.ajax({
