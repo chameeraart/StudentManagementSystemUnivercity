@@ -1,6 +1,13 @@
 ﻿$(document).ready(function () {
+    $.noConflict();
+
+    // Check if DataTable is already initialized and destroy it if necessary
+    if ($.fn.DataTable.isDataTable('#tableID')) {
+        $('#tableID').DataTable().destroy();
+    }
     loadTable();
 });
+
 
 function saveGrade() {
     var id = $('#gradeId').val();
@@ -41,6 +48,7 @@ function loadTable() {
         success: function (response) {
             var tbody = $('#tbodyid');
             tbody.empty(); // Clear the table body
+
             response.forEach(function (grade) {
                 var row = `<tr>
                     <td hidden>${grade.id}</td>
@@ -52,12 +60,35 @@ function loadTable() {
                 </tr>`;
                 tbody.append(row);
             });
+
+            // Initialize DataTables
+            if ($.fn.DataTable.isDataTable('#tableID')) {
+                $('#tableID').DataTable().destroy();
+            }
+
+            $('#tableID').DataTable({
+                destroy: true,
+                searching: true, // Enable search functionality
+                paging: true, // Enable pagination
+                pageLength: 10, // Number of rows per page
+                lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                info: true, // Show table information
+                language: {
+                    search: "Search records:", // Custom search placeholder
+                    paginate: {
+                        previous: "Prev",
+                        next: "Next"
+                    }
+                }
+            });
         },
         error: function (err) {
             console.error('Error loading table:', err);
         }
     });
 }
+
+
 
 function getGrade(gradeId) {
     $.ajax({
@@ -82,6 +113,7 @@ function deleteGrade(gradeId) {
         success: function (response) {
             swal("Success", "Grade deleted successfully!", "success");
             loadTable(); // Refresh the table after deleting
+            location.reload();
         },
         error: function (err) {
             console.error('Error deleting grade:', err);

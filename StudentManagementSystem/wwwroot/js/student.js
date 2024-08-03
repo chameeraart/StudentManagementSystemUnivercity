@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    $.noConflict();
     loadStudentTable();
     getNextStudentIndex();
 });
@@ -133,18 +134,37 @@ function loadStudentTable() {
             console.log('response', response);
             response.forEach(function (student) {
                 var row = `<tr>
-                    <td hidden>${student.id}</td>
-                    <td>${student.index}</td>
-                    <td>${student.fullName}</td>
-                    <td>${formatDate(student.dateOfBirth)}</td>
-                    <td>${student.gender}</td>
-                    <td>${student.studentEmail}</td>
-                    <td>${student.telephone}</td>
-                    <td>${student.isActive ? 'Yes' : 'No'}</td>
-                    <td><button class="btn btn-warning" onclick="getStudent('${student.id}')">Edit</button></td>
-                    <td><button class="btn btn-danger" onclick="deleteStudent('${student.id}')">Delete</button></td>
-                </tr>`;
+                        <td hidden>${student.id}</td>
+                        <td>${student.index}</td>
+                        <td>${student.fullName}</td>
+                        <td>${formatDate(student.dateOfBirth)}</td>
+                        <td>${student.gender}</td>
+                        <td>${student.studentEmail}</td>
+                        <td>${student.telephone}</td>
+                        <td>${student.isActive ? 'Yes' : 'No'}</td>
+                        <td><button class="btn btn-warning" onclick="getStudent('${student.id}')">Edit</button></td>
+                        <td><button class="btn btn-danger" onclick="deleteStudent('${student.id}')">Delete</button></td>
+                    </tr>`;
                 tbody.append(row);
+            });
+
+            $("#studentTable").fancyTable({
+                destroy: true,
+                sortColumn: 0,
+                globalSearch: true,
+                globalSearchExcludeColumns: [0],
+                onInit: function () {
+                    console.log({ element: this });
+                },
+                onUpdate: function () {
+                    console.log({ element: this });
+                },
+                pagination: true,
+                lengthMenu: [[5, 10, 20, 50], [5, 10, 20, 50]],
+                paginationClass: "btn btn-light",
+                paginationClassActive: "active",
+                pagClosest: 3,
+                perPage: 10,
             });
         },
         error: function (err) {
@@ -152,6 +172,7 @@ function loadStudentTable() {
         }
     });
 }
+
 
 
 function getNextStudentIndex() {
