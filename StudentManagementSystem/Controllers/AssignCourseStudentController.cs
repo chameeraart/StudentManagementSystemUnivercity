@@ -19,40 +19,40 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult GetAll()
         {
-            var CourseSubjects = Context.CourseSubjects.Include(t =>t.Subject).Include(t => t.Course).Where(x => x.isactive == true).OrderBy(x => x.subjectid);
-            return new ObjectResult(CourseSubjects);
+            var courseStudents = Context.courseStudents.Include(t =>t.Course).Include(t => t.Student).Where(x => x.isactive == true).OrderBy(x => x.studentid);
+            return new ObjectResult(courseStudents);
         }
         public IActionResult LoadTable()
         {
-            var CourseSubjects = Context.CourseSubjects.OrderBy(x => x.subjectid);
-            return new ObjectResult(CourseSubjects);
+            var courseStudents = Context.courseStudents.OrderBy(x => x.studentid);
+            return new ObjectResult(courseStudents);
         }
 
-        public IActionResult Create([FromBody] CourseSubject courseSubject)
+        public IActionResult Create([FromBody] CourseStudent courseStudent)
         {
-            courseSubject.created_at = DateTime.Now;
-            courseSubject.created_by = 1;
-            Context.Update(courseSubject);
+            courseStudent.created_at = DateTime.Now;
+            courseStudent.created_by = 1;
+            Context.Update(courseStudent);
             Context.SaveChanges();
-            return new ObjectResult(courseSubject.id);
+            return new ObjectResult(courseStudent.id);
         }
 
         public IActionResult get(int id)
         {
-            var courseSubject = Context.CourseSubjects.Include(t => t.Subject).Include(t => t.Course).Where(x => x.courseid == id).ToList();
-            return new ObjectResult(courseSubject);
+            var courseStudent = Context.courseStudents.Include(t => t.Course).Include(t => t.Student).Where(x => x.courseid == id).ToList();
+            return new ObjectResult(courseStudent);
         }
 
         public IActionResult delete(int id)
         {
-            var delecourseSubject = Context.CourseSubjects.FirstOrDefault(s => s.id == id);
-            if (delecourseSubject != null)
+            var delecourseStudent = Context.courseStudents.FirstOrDefault(s => s.id == id);
+            if (delecourseStudent != null)
             {
-                Context.CourseSubjects.Remove(delecourseSubject);
+                Context.courseStudents.Remove(delecourseStudent);
                 Context.SaveChanges();
             }
 
-            return new ObjectResult(delecourseSubject.id);
+            return new ObjectResult(delecourseStudent.id);
         }
     }
 }
