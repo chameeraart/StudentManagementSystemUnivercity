@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementSystem.Models;
 
@@ -11,9 +12,11 @@ using StudentManagementSystem.Models;
 namespace StudentManagementSystem.Migrations
 {
     [DbContext(typeof(StudentContext))]
-    partial class StudentContextModelSnapshot : ModelSnapshot
+    [Migration("20240907195154_assigncoursetostudent")]
+    partial class assigncoursetostudent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,53 +61,6 @@ namespace StudentManagementSystem.Migrations
                     b.HasKey("id");
 
                     b.ToTable("courses");
-                });
-
-            modelBuilder.Entity("StudentManagementSystem.Models.CourseExam", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("courseid")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("created_by")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("deleted_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("deleted_by")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("examid")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("isactive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("updated_by")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("courseid");
-
-                    b.HasIndex("examid");
-
-                    b.ToTable("courseExams");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.CourseStudent", b =>
@@ -491,21 +447,6 @@ namespace StudentManagementSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("users");
-                });
-
-            modelBuilder.Entity("StudentManagementSystem.Models.CourseExam", b =>
-                {
-                    b.HasOne("StudentManagementSystem.Models.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("courseid");
-
-                    b.HasOne("StudentManagementSystem.Models.Exam", "Exam")
-                        .WithMany()
-                        .HasForeignKey("examid");
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Exam");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.CourseStudent", b =>
