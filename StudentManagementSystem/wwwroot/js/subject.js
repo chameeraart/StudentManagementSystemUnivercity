@@ -1,4 +1,10 @@
 ﻿$(document).ready(function () {
+    $.noConflict();
+
+    // Check if DataTable is already initialized and destroy it if necessary
+    if ($.fn.DataTable.isDataTable('#tableID')) {
+        $('#tableID').DataTable().destroy();
+    }
     loadTable();
 });
 
@@ -25,6 +31,7 @@ function saveSubject() {
             swal("Success", "Subject saved successfully!", "success");
             clearSubject();
             loadTable(); // Refresh the table after saving
+            location.reload();
         },
         error: function (err) {
             console.error('Error saving subject:', err);
@@ -33,6 +40,7 @@ function saveSubject() {
 }
 
 function loadTable() {
+
     $.ajax({
         url: '/subject/getall',
         type: 'GET',
@@ -49,7 +57,26 @@ function loadTable() {
                 </tr>`;
                 tbody.append(row);
             });
+
+            $('#tableID').DataTable({
+                destroy: true,
+                searching: true, // Enable search functionality
+                paging: true, // Enable pagination
+                pageLength: 10, // Number of rows per page
+                lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                info: true, // Show table information
+                language: {
+                    search: "Search records:", // Custom search placeholder
+                    paginate: {
+                        previous: "Prev",
+                        next: "Next"
+                    }
+                }
+            });
         },
+
+
+
         error: function (err) {
             console.error('Error loading table:', err);
         }
@@ -78,6 +105,7 @@ function deleteSubject(subjectId) {
         success: function (response) {
             swal("Success", "Subject deleted successfully!", "success");
             loadTable(); // Refresh the table after deleting
+            location.reload();
         },
         error: function (err) {
             console.error('Error deleting Subject:', err);

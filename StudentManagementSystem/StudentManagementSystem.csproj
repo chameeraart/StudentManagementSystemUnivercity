@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\assigcoursesubject.js" />
     <Content Remove="wwwroot\js\exam.js" />
     <Content Remove="wwwroot\js\grade.js" />
     <Content Remove="wwwroot\js\student.js" />
@@ -16,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\assigcoursesubject.js" />
     <None Include="wwwroot\js\exam.js" />
     <None Include="wwwroot\js\user.js" />
     <None Include="wwwroot\js\student.js" />
@@ -37,6 +39,10 @@
 
   <ItemGroup>
     <Content Update="Views\Pages\Class.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Pages\AssignCourseSubject.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

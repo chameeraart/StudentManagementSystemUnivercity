@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementSystem.Models;
 
@@ -11,9 +12,11 @@ using StudentManagementSystem.Models;
 namespace StudentManagementSystem.Migrations
 {
     [DbContext(typeof(StudentContext))]
-    partial class StudentContextModelSnapshot : ModelSnapshot
+    [Migration("20240907181132_addcoursesubjecttable")]
+    partial class addcoursesubjecttable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,7 +74,7 @@ namespace StudentManagementSystem.Migrations
                     b.Property<string>("Remark")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("courseid")
+                    b.Property<int>("courseid")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("created_at")
@@ -89,7 +92,7 @@ namespace StudentManagementSystem.Migrations
                     b.Property<bool>("isactive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("subjectid")
+                    b.Property<int>("subjectid")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("updated_at")
@@ -99,10 +102,6 @@ namespace StudentManagementSystem.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("id");
-
-                    b.HasIndex("courseid");
-
-                    b.HasIndex("subjectid");
 
                     b.ToTable("CourseSubjects");
                 });
@@ -397,21 +396,6 @@ namespace StudentManagementSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("users");
-                });
-
-            modelBuilder.Entity("StudentManagementSystem.Models.CourseSubject", b =>
-                {
-                    b.HasOne("StudentManagementSystem.Models.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("courseid");
-
-                    b.HasOne("StudentManagementSystem.Models.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("subjectid");
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Subject");
                 });
 #pragma warning restore 612, 618
         }
