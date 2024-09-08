@@ -8,7 +8,7 @@ namespace StudentManagementSystem.Controllers
     {
         public IActionResult Index()
         {
-            return View("~/Views/Pages/AssignCourseStudent.cshtml");
+            return View("~/Views/Pages/AssignCourseExam.cshtml");
         }
 
         public StudentContext Context { get; }

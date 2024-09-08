@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StudentManagementSystem.Models;
 
 namespace StudentManagementSystem.Controllers
@@ -18,12 +19,12 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult GetAll()
         {
-            var subjects = Context.subjects.Where(x => x.isactive == true).OrderBy(x => x.name);
+            var subjects = Context.subjects.Include(t =>t.Exam).Where(x => x.isactive == true).OrderBy(x => x.name);
             return new ObjectResult(subjects);
         }
         public IActionResult LoadTable()
         {
-            var subjects = Context.subjects.OrderBy(x => x.name);
+            var subjects = Context.subjects.Include(t =>t.Exam).OrderBy(x => x.name);
             return new ObjectResult(subjects);
         }
 
@@ -38,7 +39,7 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult get(int id)
         {
-            var subject = Context.subjects.Where(x => x.id == id).SingleOrDefault();
+            var subject = Context.subjects.Include(t =>t.Exam).Where(x => x.id == id).SingleOrDefault();
             return new ObjectResult(subject);
         }
 
