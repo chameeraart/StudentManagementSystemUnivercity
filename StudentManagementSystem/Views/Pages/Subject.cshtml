@@ -25,6 +25,12 @@
                                     <label for="subjectName">Subject Name</label>
                                     <input type="text" class="form-control" id="subjectName" placeholder="Enter Subject name" autocomplete="off">
                                 </div>
+                                <div class="form-group">
+                                    <label for="examDropdown">Select Exam</label>
+                                    <select class="form-control" id="examDropdown">
+                                        <!-- Options will be dynamically loaded here -->
+                                    </select>
+                                </div>
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="isActive" checked="">
                                     <label class="form-check-label" for="isActive">Active</label>
@@ -64,6 +70,8 @@
                                     <tr>
                                         <th hidden="hidden">Subject Id</th>
                                         <th>Subject Name</th>
+                                        <th>Exam Name</th>
+                                        <th hidden="hidden">Exam Id</th>
                                         <th>Active</th>
                                         <th>Edit</th>
                                         <th>Delete</th>

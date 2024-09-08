@@ -5,17 +5,21 @@
     if ($.fn.DataTable.isDataTable('#tableID')) {
         $('#tableID').DataTable().destroy();
     }
+    loadExam();
     loadTable();
+
 });
 
 function saveSubject() {
     var id = $('#subjectId').val();
     var subjectName = $('#subjectName').val();
     var isActive = $('#isActive').is(':checked');
+    var examid = $('#examDropdown').val();
 
     var subject = {
         id: id,
         name: subjectName,
+        examid: examid,
         isactive: isActive
     };
 
@@ -45,12 +49,15 @@ function loadTable() {
         url: '/subject/getall',
         type: 'GET',
         success: function (response) {
+            console.log('response', response);
             var tbody = $('#tbodyid');
             tbody.empty(); // Clear the table body
             response.forEach(function (subject) {
                 var row = `<tr>
                     <td hidden>${subject.id}</td>
                     <td>${subject.name}</td>
+                    <td>${subject.exam.examName}</td>
+                    <td hidden>${subject.exam.id}</td>
                     <td>${subject.isactive ? 'Yes' : 'No'}</td>
                     <td><button class="btn btn-warning" onclick="getSubject(${subject.id})">Edit</button></td>
                     <td><button class="btn btn-danger" onclick="deleteSubject(${subject.id})">Delete</button></td>
@@ -90,10 +97,28 @@ function getSubject(subjectId) {
         success: function (response) {
             $('#subjectId').val(response.id);
             $('#subjectName').val(response.name);
+            $('#examDropdown').val(response.exam.id);
             $('#isActive').prop('checked', response.isactive);
         },
         error: function (err) {
             console.error('Error fetching Subject:', err);
+        }
+    });
+}
+function loadExam() {
+    $.ajax({
+        url: '/Exam/getall',
+        type: 'GET',
+        success: function (response) {
+            var dropdown = $('#examDropdown');
+            dropdown.empty();
+            dropdown.append('<option value="" disabled selected>Select a Exam</option>');
+            response.forEach(function (exam) {
+                dropdown.append($('<option></option>').attr('value', exam.id).text(exam.examName));
+            });
+        },
+        error: function (err) {
+            console.error('Error loading students:', err);
         }
     });
 }
@@ -118,4 +143,5 @@ function clearSubject() {
     $('#subjectId').val('0');
     $('#subjectName').val('');
     $('#isActive').prop('checked', true);
+    $('#examDropdown').val('');
 }
