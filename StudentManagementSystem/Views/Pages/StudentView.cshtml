@@ -4,52 +4,19 @@
 
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
-<style>
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
 
-    .container {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
 
-    form {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        overflow: hidden; /* Ensure the form takes up remaining space */
-    }
-
-    .card {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .card-body {
-        overflow-y: auto;
-    }
-
-    #studentTable {
-        width: 100%;
-    }
-</style>
-
-<div class="container">
-    <form id="studentForm" enctype="multipart/form-data">
+<div class="container-fluid d-flex flex-column h-100">
+    <form id="studentForm" enctype="multipart/form-data" class="flex-grow-1 d-flex flex-column">
         <h4 class="mb-4 text-muted">Add Student Details</h4>
 
         <div class="row flex-grow-1">
-            <div class="col-12">
-                <div class="card shadow-sm rounded-3 h-100">
+            <div class="col-12 h-100">
+                <div class="card shadow-sm rounded-3 h-100 d-flex flex-column">
                     <div class="card-header bg-primary text-white">
                         <h6 class="card-title mb-0">Saved Students</h6>
                     </div>
-                    <div class="card-body table-responsive p-0 flex-grow-1" >
+                    <div class="card-body table-responsive p-0 flex-grow-1">
                         <table class="table table-hover text-nowrap" id="studentTable">
                             <thead class="table-light">
                                 <tr>
@@ -59,7 +26,6 @@
                                     <th>Date Of Birth</th>
                                     <th>Gender</th>
                                     <th>Student Email</th>
-                                    @*  <th>Address</th> *@
                                     <th>Telephone</th>
                                     <th>Active</th>
                                     <th>Edit</th>
@@ -68,9 +34,6 @@
                             </thead>
                             <tbody id="tbodyStudent"></tbody>
                         </table>
-                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                            <!-- DataTable buttons will be appended here -->
-                        </div>
                     </div>
                 </div>
             </div>
@@ -99,7 +62,53 @@
         image.style.display = 'none';
     }
 </script>
+<!-- Custom CSS -->
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+    }
 
+    .container-fluid {
+        height: 100vh; /* Full screen height */
+    }
+
+    .card {
+        margin: 15px 0;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .table-responsive {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    table {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+        table th, table td {
+            text-align: center;
+            padding: 15px;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        table td {
+            background-color: #f8f9fa;
+        }
+
+        table tr:hover {
+            background-color: #d6e9f8;
+        }
+</style>
 <!-- Include jQuery -->
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 

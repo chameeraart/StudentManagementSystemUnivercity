@@ -25,6 +25,22 @@ function validateExamForm() {
         return false;
     }
 
+    // Check for duplicate exam name in the table
+    var isDuplicate = false;
+    $('#examTable tbody tr').each(function () {
+        var existingExamName = $(this).find('td').eq(1).text().trim(); // Get the exam name from the table (2nd column)
+
+        if (examName.toLowerCase() === existingExamName.toLowerCase()) {
+            isDuplicate = true;
+            return false; // Break the loop once a duplicate is found
+        }
+    });
+
+    if (isDuplicate) {
+        swal("Warning", "This exam name already exists!", "warning");
+        return false; // Prevent form submission
+    }
+
     return true;
 }
 

@@ -13,7 +13,26 @@ function saveCourse() {
         isactive: isActive
     };
 
-    console.log(course, 'course');
+    if (courseName === "") {
+        swal("Warning", "Course name cannot be empty.", "Warning");
+        return false; // Prevent saving
+    }
+
+    // Check if the course name already exists in the table
+    var isDuplicate = false;
+    $('#courseTable tbody tr').each(function () {
+        var existingCourseName = $(this).find('td').eq(1).text().trim(); // Get the text from the second column (Course Name)
+        if (courseName.toLowerCase() === existingCourseName.toLowerCase()) {
+            isDuplicate = true;
+            return false; // Break the loop
+        }
+    });
+
+    if (isDuplicate) {
+        swal("Warning", "Course name already exists.!", "Warning");
+        return false; // Prevent saving
+    }
+
     var url = '/course/create'; // Adjust URL as needed
 
     $.ajax({

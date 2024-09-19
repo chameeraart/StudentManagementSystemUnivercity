@@ -23,7 +23,38 @@ function saveSubject() {
         isactive: isActive
     };
 
-    console.log(subject, 'subject');
+    // Check if subjectName is empty
+    if (subjectName === "") {
+        swal("Warning", "Subject name cannot be empty!", "warning");
+        return false; // Prevent the form from submitting
+    }
+
+    // Check if examid is empty
+    if (examid === "" || examid === null) {
+        swal("Warning", "Please select an exam!", "warning");
+        return false; // Prevent the form from submitting
+    }
+    
+ /*    Check for duplicate subject and exam combination in the table*/
+    var isDuplicate = false;
+    $('#tableID tbody tr').each(function () {
+        var existingSubjectName = $(this).find('td').eq(1).text().trim(); // Get subject name from table
+        var existingExamName = $(this).find('td').eq(3).text().trim(); // Get exam name from table
+
+        console.log("Checking against:", existingSubjectName, existingExamName);
+
+        if (subjectName.toLowerCase() === existingSubjectName.toLowerCase() &&
+            examid.toLowerCase() === existingExamName.toLowerCase()) {
+            isDuplicate = true;
+            return false; // Break the loop once a duplicate is found
+        }
+    });
+
+    if (isDuplicate) {
+        swal("Warning", "This subject with the same exam already exists!", "warning");
+        return false; // Prevent the form from submitting
+    }
+
     var url = '/subject/create'; // Adjust URL as needed
 
     $.ajax({

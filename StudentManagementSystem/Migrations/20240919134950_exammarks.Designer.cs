@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementSystem.Models;
 
@@ -11,9 +12,11 @@ using StudentManagementSystem.Models;
 namespace StudentManagementSystem.Migrations
 {
     [DbContext(typeof(StudentContext))]
-    partial class StudentContextModelSnapshot : ModelSnapshot
+    [Migration("20240919134950_exammarks")]
+    partial class exammarks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,7 +272,7 @@ namespace StudentManagementSystem.Migrations
                     b.Property<int?>("deleted_by")
                         .HasColumnType("int");
 
-                    b.Property<int?>("examid")
+                    b.Property<int>("examId")
                         .HasColumnType("int");
 
                     b.Property<bool>("isactive")
@@ -278,8 +281,9 @@ namespace StudentManagementSystem.Migrations
                     b.Property<decimal>("mark")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("studentid")
-                        .HasColumnType("int");
+                    b.Property<string>("studentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("updated_at")
                         .HasColumnType("datetime2");
@@ -288,10 +292,6 @@ namespace StudentManagementSystem.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("examid");
-
-                    b.HasIndex("studentid");
 
                     b.ToTable("ExamMarks");
                 });
@@ -588,21 +588,6 @@ namespace StudentManagementSystem.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Subject");
-                });
-
-            modelBuilder.Entity("StudentManagementSystem.Models.ExamMark", b =>
-                {
-                    b.HasOne("StudentManagementSystem.Models.Exam", "Exam")
-                        .WithMany()
-                        .HasForeignKey("examid");
-
-                    b.HasOne("StudentManagementSystem.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("studentid");
-
-                    b.Navigation("Exam");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.Subject", b =>

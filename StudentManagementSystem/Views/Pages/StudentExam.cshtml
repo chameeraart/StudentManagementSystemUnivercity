@@ -1,111 +1,102 @@
-﻿<div class="text-center">
+﻿<div class="container-fluid text-center">
     <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Add Courses to Student</h3>
-                        </div>
-                        <form>
-                            <input type="hidden" class="form-control" id="subjectId" value="0" />
-                            <div class="card-body">
-                                <div id="courses-container">
-                                    <div class="form-group">
-                                        <label for="courseDropdown">Select Course</label>
-                                        <select class="form-control" id="courseDropdown">
-                                            <!-- Options will be dynamically loaded here -->
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="studentDropdown">Select Student</label>
-                                        <select class="form-control" id="studentDropdown">
-                                            <!-- Options will be dynamically loaded here -->
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Remark"></label>
-                                        <input type="text" class="form-control" id="Remark" placeholder="Enter Remark" autocomplete="off">
-                                    </div>
-
-                                    <div class="form-check mt-2">
-                                        <input type="checkbox" class="form-check-input" id="isActive" checked="">
-                                        <label class="form-check-label" for="isActive">Active</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <button type="button" id="savebtn" onclick="saveData()" class="btn btn-primary me-2">Save</button>
-                                    <button type="button" id="clearbtn" onclick="clearForm()" class="btn btn-danger">Clear</button>
-                                </div>
-                            </div>
-                        </form>
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card card-primary shadow-sm">
+                    <div class="card-header text-white bg-primary">
+                        <h3 class="card-title">Add Exam Marks to Student</h3>
                     </div>
+                    <form>
+                        <input type="hidden" class="form-control" id="id" value="0" />
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="examDropdown">Select Exam</label>
+                                <select class="form-control" id="examDropdown">
+                                    <!-- Options will be dynamically loaded here -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentDropdown">Select Student</label>
+                                <select class="form-control" id="studentDropdown">
+                                    <!-- Options will be dynamically loaded here -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="Marks">Enter Marks</label>
+                                <input type="number" class="form-control" id="Marks" placeholder="Enter Marks" autocomplete="off" step="1" min="0" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                            </div>
+
+                            <div class="form-check mt-3">
+                                <input type="checkbox" class="form-check-input" id="isActive" checked="">
+                                <label class="form-check-label" for="isActive">Active</label>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" id="savebtn" onclick="saveData()" class="btn btn-primary me-2">Save</button>
+                            <button type="button" id="clearbtn" onclick="clearForm()" class="btn btn-danger">Clear</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-md-3"></div>
             </div>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h6 class="card-title">Courses Added to Student</h6>
-                        </div>
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-striped table-bordered" id="courseTable">
-                                <thead>
-                                    <tr>
-                                        <th hidden>CourseStudentId</th>
-                                        <th>Course Name</th>
-                                        <th hidden>CourseId</th>
-                                        <th hidden>StudentId</th>
-                                        <th>Active</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbodyid"></tbody>
-                            </table>
-                        </div>
+        </div>
+        <div class="row mt-4 justify-content-center">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-secondary text-white">
+                        <h6 class="card-title">Exam Marks for Students</h6>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-striped table-bordered table-hover" id="marksTable">
+                            <thead>
+                                <tr>
+                                    <th hidden>ExamStudentId</th>
+                                    <th>Exam Name</th>
+                                    <th hidden>ExamId</th>
+                                    <th hidden>StudentId</th>
+                                    <th>Marks</th>
+                                    <th>Active</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyid"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 </div>
 
 <!-- Include jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Include DataTables JS from CDN -->
+<!-- Include DataTables JS -->
 <script src="https://cdn.datatables.net/2.1.5/js/dataTables.min.js"></script>
 <!-- Include DataTables CSS for styling -->
 <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css">
 <!-- Sweet Alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script>
-    // Save all courses to the server
-    function loadTable() {
+    function loadExams() {
         $.ajax({
-            url: '/course/getall',
+            url: '/Exam/getall',
             type: 'GET',
             success: function (response) {
-                var dropdown = $('#courseDropdown');
+                var dropdown = $('#examDropdown');
                 dropdown.empty();
-                dropdown.append('<option value="" disabled selected>Select a Course</option>');
-                response.forEach(function (course) {
-                    dropdown.append($('<option></option>').attr('value', course.id).text(course.name));
+                dropdown.append('<option value="" disabled selected>Select an Exam</option>');
+                response.forEach(function (exam) {
+                    dropdown.append($('<option></option>').attr('value', exam.id).text(exam.examName));
                 });
             },
             error: function (err) {
-                console.error('Error loading courses:', err);
+                console.error('Error loading exams:', err);
             }
         });
     }
 
-    function loadStudent() {
+    function loadStudents() {
         $.ajax({
             url: '/student/getall',
             type: 'GET',
@@ -123,138 +114,134 @@
         });
     }
 
-    function loadSubjectCourse() {
+    function loadExamMarks() {
         $.ajax({
-            url: '/AssignCourseStudent/getall',
+            url: '/StudentExam/getall',
             type: 'GET',
             success: function (response) {
-                console.log('response', response);
                 var tbody = $('#tbodyid');
                 tbody.empty(); // Clear the table body
 
-                // Assuming the array is inside a property called 'courses'
-                var courses = response.courses;
-                console.log('courses', courses)
-                if (Array.isArray(courses)) {
-                    courses.forEach(function (course) {
+                if (Array.isArray(response)) {
+                    response.forEach(function (examMark) {
                         var row = `<tr>
-                                <td hidden>${course.id}</td>
-                                <td>${course.course.name}</td>
-                                <td hidden>${course.course.id}</td>
-                                <td hidden>${course.student.id}</td>
-                                <td>${course.isactive ? 'Yes' : 'No'}</td>
-                                <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
-                            </tr>`;
+                                        <td hidden>${examMark.id}</td>
+                                        <td>${examMark.exam.examName}</td>
+                                        <td hidden>${examMark.exam.id}</td>
+                                        <td hidden>${examMark.student.id}</td>
+                                        <td>${examMark.mark}</td>
+                                        <td>${examMark.isactive ? 'Yes' : 'No'}</td>
+                                         <td><button class="btn btn-danger" onclick="getExam(${examMark.id})">Edit</button></td>
+                                        <td><button class="btn btn-danger" onclick="deleteExamMark(${examMark.id})">Delete</button></td>
+                                    </tr>`;
                         tbody.append(row);
                     });
                 } else {
-                    console.error('Expected an array but got:', courses);
+                    console.error('Expected an array but got:', response);
                 }
             },
             error: function (err) {
-                console.error('Error loading table:', err);
+                console.error('Error loading marks table:', err);
+            }
+        });
+    }
+    function getExam(courseId) {
+        console.log('courseId', courseId)
+        $.ajax({
+            url: '/StudentExam/get/' + courseId,
+            type: 'GET',
+            success: function (response) {
+                // Populate form fields with the response data
+                $('#id').val(response.id);  // Assuming the ID is stored here
+                $('#examDropdown').val(response.exam.id);  // Set the exam dropdown value
+                $('#studentDropdown').val(response.student.id);  // Set the student dropdown value
+                $('#Marks').val(response.mark);  // Set the marks field
+                $('#isActive').prop('checked', response.isactive);  // Set active checkbox
+            },
+            error: function (err) {
+                console.error('Error fetching exam data:', err);
             }
         });
     }
 
-    function deleteassCourse(courseid) {
+    function deleteExamMark(markId) {
         $.ajax({
-            url: '/AssignCourseStudent/delete/' + courseid,
+            url: '/StudentExam/delete/' + markId,
             type: 'DELETE',
             success: function (response) {
-                swal("Success", "Assign Course Subject deleted successfully!", "success");
-                loadSubjectCourse(); // Refresh the table after deleting
+                swal("Success", "Exam mark deleted successfully!", "success");
+                loadExamMarks();
             },
             error: function (err) {
-                console.error('Error deleting assign course:', err);
+                console.error('Error deleting exam mark:', err);
             }
         });
     }
 
     function saveData() {
-        // Get form values
-        var courseId = $('#courseDropdown').val();
+        var examId = $('#examDropdown').val();
         var studentId = $('#studentDropdown').val();
-        var remark = $('#Remark').val();
+        var marks = $('#Marks').val();
         var isActive = $('#isActive').is(':checked');
-
-        // Create an object with the form data
+        var id = $('#id').val();
         var data = {
-            courseid: courseId,
+            id :id,
+            examid: examId,
             studentid: studentId,
-            Remark: remark,
+            mark: marks,
             isactive: isActive
         };
+        // Validate that exam, student, and marks are selected or entered
+        if (!examId) {
+            swal("Error", "Please select an exam.", "error");
+            return;
+        }
 
-        // Make an AJAX POST request to save the data
+        if (!studentId) {
+            swal("Error", "Please select a student.", "error");
+            return;
+        }
+
+        if (!marks || marks <= 0) {
+            swal("Error", "Please enter a valid mark.", "error");
+            return;
+        }
+
         $.ajax({
-            url: '/AssignCourseStudent/create', // Update with your API endpoint
+            url: '/StudentExam/create',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function (response) {
-                swal("Success", "Assign Course Subject saved successfully!", "success");
-                loadSubjectCourse(); // Refresh the table after saving
+                swal("Success", "Exam mark saved successfully!", "success");
+                loadExamMarks();
             },
             error: function (err) {
-                console.error('Error saving data:', err);
+                console.error('Error saving exam mark:', err);
                 alert('Error saving data. Please try again.');
             }
         });
     }
 
-    // Clear the form and grid
     function clearForm() {
-        $('#courseDropdown').val('');
+        $('#examDropdown').val('');
         $('#studentDropdown').val('');
+        $('#Marks').val('');
         $('#isActive').prop('checked', true);
-        $('#courseTable').DataTable().clear().draw();
+        $('#marksTable').DataTable().clear().draw();
     }
 
-    // Initialize DataTable on document ready
     $(document).ready(function () {
         $.noConflict();
-
-        $('#courseTable').DataTable({
-            paging: false, // Disable pagination
-            searching: false, // Keep search functionality
-            ordering: true, // Keep sorting functionality
-            info: false // Optionally, hide the table information
+        $('#marksTable').DataTable({
+            paging: false,
+            searching: false,
+            ordering: true,
+            info: false
         });
 
-        loadTable();
-        loadStudent();
-        loadSubjectCourse();
-;
-
-        $('#courseDropdown').change(function () {
-            var courseId = $(this).val(); // Get the selected course ID
-            if (courseId > 0) {
-                $.ajax({
-                    url: '/AssignCourseStudent/get/' + courseId,
-                    type: 'GET',
-                    success: function (response) {
-                        console.log('response', response);
-                        var tbody = $('#tbodyid');
-                        tbody.empty(); // Clear the table body
-                        response.forEach(function (course) {
-                            var row = `<tr>
-                            <td hidden>${course.id}</td>
-                            <td>${course.course.name}</td>
-                            <td hidden>${course.course.id}</td>
-                            <td hidden>${course.student.id}</td>
-                             <td>${course.student.fullName}</td>
-                            <td>${course.isactive ? 'Yes' : 'No'}</td>
-                            <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
-                        </tr>`;
-                            tbody.append(row);
-                        });
-                    },
-                    error: function (err) {
-                        console.error('Error fetching course details:', err);
-                    }
-                });
-            }
-        });
+        loadExams();
+        loadStudents();
+        loadExamMarks();
     });
 </script>

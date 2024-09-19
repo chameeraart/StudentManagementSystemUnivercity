@@ -22,7 +22,27 @@ function saveGrade() {
         isactive: isActive
     };
 
-    console.log(grade, 'grade');
+    // Validate if gradeName is empty
+    if (gradeName === "") {
+        swal("Warning", "Grade name cannot be empty!", "warning");
+        return false; // Prevent form submission
+    }
+
+    // Check for duplicate grade name in the table
+    var isDuplicate = false;
+    $('#tableID tbody tr').each(function () {
+        var existingGradeName = $(this).find('td').eq(1).text().trim(); // Get the grade name from the table (2nd column)
+        if (gradeName.toLowerCase() === existingGradeName.toLowerCase()) {
+            isDuplicate = true;
+            return false; // Break the loop once a duplicate is found
+        }
+    });
+
+    if (isDuplicate) {
+        swal("Warning", "This grade name already exists!", "warning");
+        return false; // Prevent form submission
+    }
+
     var url = '/grade/create'; // Adjust URL as needed
 
     $.ajax({
