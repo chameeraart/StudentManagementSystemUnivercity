@@ -1,4 +1,5 @@
-﻿function loadTable() {
+﻿// Save all courses to the server
+function loadTable() {
     $.ajax({
         url: '/course/getall',
         type: 'GET',
@@ -16,27 +17,27 @@
     });
 }
 
-function loadSubject() {
+function loadExam() {
     $.ajax({
-        url: '/subject/getall',
+        url: '/exam/getall',
         type: 'GET',
         success: function (response) {
-            var dropdown = $('#subjectDropdown');
+            var dropdown = $('#examDropdown');
             dropdown.empty();
-            dropdown.append('<option value="" disabled selected>Select a Subject</option>');
-            response.forEach(function (subject) {
-                dropdown.append($('<option></option>').attr('value', subject.id).text(subject.name));
+            dropdown.append('<option value="" disabled selected>Select a Exam</option>');
+            response.forEach(function (exam) {
+                dropdown.append($('<option></option>').attr('value', exam.id).text(exam.ExamName));
             });
         },
         error: function (err) {
-            console.error('Error loading subjects:', err);
+            console.error('Error loading students:', err);
         }
     });
 }
 
 function loadSubjectCourse() {
     $.ajax({
-        url: '/AssignCourseSubject/getall',
+        url: '/AssignCourseExam/getall',
         type: 'GET',
         success: function (response) {
             console.log('response', response);
@@ -44,19 +45,18 @@ function loadSubjectCourse() {
             tbody.empty(); // Clear the table body
 
             // Assuming the array is inside a property called 'courses'
-            var courses = response.courses;
-
-            if (Array.isArray(courses)) {
-                courses.forEach(function (course) {
+            var courseExams = response.courses;
+            console.log('courses', courseExams)
+            if (Array.isArray(courseExams)) {
+                courses.forEach(function (courseExams) {
                     var row = `<tr>
-                            <td hidden>${course.id}</td>
-                            <td>${course.course.name}</td>
-                            <td hidden>${course.course.id}</td>
-                            <td hidden>${course.subject.id}</td>
-                            <td>${course.subject.name}</td>
-                            <td>${course.isactive ? 'Yes' : 'No'}</td>
-                            <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
-                        </tr>`;
+                                    <td hidden>${courseExams.id}</td>
+                                    <td>${course.courseExams.name}</td>
+                                    <td hidden>${courseExams.course.id}</td>
+                                    <td hidden>${courseExams.exam.id}</td>
+                                    <td>${courseExams.isactive ? 'Yes' : 'No'}</td>
+                                <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
+                            </tr>`;
                     tbody.append(row);
                 });
             } else {
@@ -71,11 +71,11 @@ function loadSubjectCourse() {
 
 function deleteassCourse(courseid) {
     $.ajax({
-        url: '/AssignCourseSubject/delete/' + courseid,
+        url: '/AssignCourseExam/delete/' + courseid,
         type: 'DELETE',
         success: function (response) {
             swal("Success", "Assign Course Subject deleted successfully!", "success");
-            loadtogrid(); // Refresh the table after deleting
+            loadSubjectCourse(); // Refresh the table after deleting
         },
         error: function (err) {
             console.error('Error deleting assign course:', err);
@@ -86,26 +86,27 @@ function deleteassCourse(courseid) {
 function saveData() {
     // Get form values
     var courseId = $('#courseDropdown').val();
-    var subjectId = $('#subjectDropdown').val();
+    var studentId = $('#studentDropdown').val();
     var remark = $('#Remark').val();
     var isActive = $('#isActive').is(':checked');
 
     // Create an object with the form data
     var data = {
         courseid: courseId,
-        subjectid: subjectId,
+        studentid: studentId,
         Remark: remark,
         isactive: isActive
     };
 
     // Make an AJAX POST request to save the data
     $.ajax({
-        url: '/AssignCourseSubject/create', // Update with your API endpoint
+        url: '/AssignCourseExam/create', // Update with your API endpoint
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function (response) {
             swal("Success", "Assign Course Subject saved successfully!", "success");
+            loadSubjectCourse(); // Refresh the table after saving
         },
         error: function (err) {
             console.error('Error saving data:', err);
@@ -117,7 +118,7 @@ function saveData() {
 // Clear the form and grid
 function clearForm() {
     $('#courseDropdown').val('');
-    $('#subjectDropdown').val('');
+    $('#studentDropdown').val('');
     $('#isActive').prop('checked', true);
     $('#courseTable').DataTable().clear().draw();
 }
@@ -132,18 +133,17 @@ $(document).ready(function () {
         ordering: true, // Keep sorting functionality
         info: false // Optionally, hide the table information
     });
-    alert('click');
 
     loadTable();
-    loadSubject();
-
-
+    loadStudent();
+    loadSubjectCourse();
+    ;
 
     $('#courseDropdown').change(function () {
         var courseId = $(this).val(); // Get the selected course ID
         if (courseId > 0) {
             $.ajax({
-                url: '/AssignCourseSubject/get/' + courseId,
+                url: '/AssignCourseExam/get/' + courseId,
                 type: 'GET',
                 success: function (response) {
                     console.log('response', response);
@@ -151,14 +151,14 @@ $(document).ready(function () {
                     tbody.empty(); // Clear the table body
                     response.forEach(function (course) {
                         var row = `<tr>
-                        <td hidden>${course.id}</td>
-                        <td>${course.course.name}</td>
-                        <td hidden>${course.course.id}</td>
-                        <td hidden>${course.subject.id}</td>
-                        <td>${course.subject.name}</td>
-                        <td>${course.isactive ? 'Yes' : 'No'}</td>
-                        <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
-                    </tr>`;
+                            <td hidden>${course.id}</td>
+                            <td>${course.course.name}</td>
+                            <td hidden>${course.course.id}</td>
+                            <td hidden>${course.exam.id}</td>
+                             <td>${course.student.examName}</td>
+                            <td>${course.isactive ? 'Yes' : 'No'}</td>
+                            <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
+                        </tr>`;
                         tbody.append(row);
                     });
                 },
@@ -168,42 +168,4 @@ $(document).ready(function () {
             });
         }
     });
-
-
 });
-
-// Delete a course row from the grid
-function deleteCourse(button) {
-    const table = $('#courseTable').DataTable();
-    table.row($(button).closest('tr')).remove().draw(false);
-}
-
-function loadtogrid() {
-    var courseId = $('#courseDropdown').val();
-    if (courseId > 0) {
-        $.ajax({
-            url: '/AssignCourseSubject/get/' + courseId,
-            type: 'GET',
-            success: function (response) {
-                console.log('response', response);
-                var tbody = $('#tbodyid');
-                tbody.empty(); // Clear the table body
-                response.forEach(function (course) {
-                    var row = `<tr>
-                            <td hidden>${course.id}</td>
-                            <td>${course.course.name}</td>
-                            <td hidden>${course.course.id}</td>
-                            <td hidden>${course.subject.id}</td>
-                            <td>${course.subject.name}</td>
-                            <td>${course.isactive ? 'Yes' : 'No'}</td>
-                            <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
-                        </tr>`;
-                    tbody.append(row);
-                });
-            },
-            error: function (err) {
-                console.error('Error fetching course details:', err);
-            }
-        });
-    }
-}

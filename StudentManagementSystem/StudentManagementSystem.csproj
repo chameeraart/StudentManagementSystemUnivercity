@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\js\assigcoursesubject.js" />
+    <Content Remove="wwwroot\js\assignCourseExam.js" />
+    <Content Remove="wwwroot\js\assignCourseStudent.js" />
     <Content Remove="wwwroot\js\exam.js" />
     <Content Remove="wwwroot\js\grade.js" />
+    <Content Remove="wwwroot\js\login.js" />
     <Content Remove="wwwroot\js\student.js" />
     <Content Remove="wwwroot\js\studentclass.js" />
     <Content Remove="wwwroot\js\subject.js" />
@@ -17,7 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\assignCourseStudent.js" />
+    <None Include="wwwroot\js\assignCourseExam.js" />
     <None Include="wwwroot\js\assigcoursesubject.js" />
+    <None Include="wwwroot\js\login.js" />
     <None Include="wwwroot\js\exam.js" />
     <None Include="wwwroot\js\user.js" />
     <None Include="wwwroot\js\student.js" />

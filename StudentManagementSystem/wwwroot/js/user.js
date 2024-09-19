@@ -1,8 +1,13 @@
 ﻿$(document).ready(function () {
+    
+
+    $.noConflict();
+
+    // Check if DataTable is already initialized and destroy it if necessary
+    if ($.fn.DataTable.isDataTable('#userTable')) {
+        $('#userTable').DataTable().destroy();
+    }
     loadUsers();
-
-    $('#userTable').DataTable();
-
     $('#userForm').on('submit', function (e) {
         e.preventDefault();
         saveUser();
@@ -58,6 +63,23 @@ function loadUsers() {
                     <td><button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">Delete</button></td>
                 </tr>`;
                 tbody.append(row);
+            });
+
+
+            $('#userTable').DataTable({
+                destroy: true,
+                searching: true, // Enable search functionality
+                paging: true, // Enable pagination
+                pageLength: 10, // Number of rows per page
+                lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                info: true, // Show table information
+                language: {
+                    search: "Search records:", // Custom search placeholder
+                    paginate: {
+                        previous: "Prev",
+                        next: "Next"
+                    }
+                }
             });
         },
         error: function (error) {
