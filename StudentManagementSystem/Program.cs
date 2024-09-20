@@ -34,7 +34,7 @@ builder.Services.AddDbContext<StudentContext>(options =>
 
 builder.Services.AddScoped<SessionManager>();
 
-
+builder.Services.AddTransient<EmailService>();
 
 // Adding Authentication
 builder.Services.AddAuthentication(options =>
@@ -70,6 +70,7 @@ using (var scope = app.Services.CreateScope())
     var session = services.GetRequiredService<SessionManager>();
     var context = services.GetRequiredService<StudentContext>();
     var initMigrations = services.GetRequiredService<InitMigrations>();
+    var EmailService = services.GetRequiredService<EmailService>();
     initMigrations.MigrateDatabase();
 }
 

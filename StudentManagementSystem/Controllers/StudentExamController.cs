@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StudentManagementSystem.Email;
 using StudentManagementSystem.Models;
+using StudentManagementSystem.Services;
+using StudentManagementSystem.Email;
 
 namespace StudentManagementSystem.Controllers
 {
@@ -11,9 +14,11 @@ namespace StudentManagementSystem.Controllers
             return View("~/Views/Pages/StudentExam.cshtml");
         }
         public StudentContext Context { get; }
-        public StudentExamController(StudentContext context)
+        private readonly EmailService _emailService;
+        public StudentExamController(StudentContext context, EmailService emailService)
         {
             Context = context;
+            _emailService = emailService;
         }
 
         public IActionResult GetAll()
@@ -29,9 +34,35 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult Create([FromBody] ExamMark examMark)
         {
+            EmailBuilder emailBuilder = new EmailBuilder();
             examMark.created_at = DateTime.Now;
             examMark.created_by = 1;
             Context.Update(examMark);
+
+
+            var student = Context.students.Where(x => x.id == examMark.studentid).FirstOrDefault();
+            var exam = Context.exams.Where(x => x.Id == examMark.examid).FirstOrDefault();
+            var studenytsubject = Context.subjects.Where(x => x.examid == examMark.examid).FirstOrDefault();
+
+
+            var grades = Context.grades.ToList(); // Assuming you have a DbSet<Grade> in your context
+
+            // Find the grade that matches the mark range
+            var grade = grades.FirstOrDefault(g => g.from <= examMark.mark && g.to >= examMark.mark && g.isactive);
+
+
+            string toEmail = student.StudentEmail;    
+            string subject = "Exam Result";
+            string body = emailBuilder.BuildExamResultEmail(
+                       studentName: student.FullName,
+                       examName: exam.ExamName,
+                       studentId: student.id,
+                       subject: studenytsubject.name,
+                       mark: examMark.mark,
+                       grade.name
+       );
+
+            _emailService.SendEmailAsync(toEmail, subject, body);
             Context.SaveChanges();
             return new ObjectResult(examMark.Id);
         }

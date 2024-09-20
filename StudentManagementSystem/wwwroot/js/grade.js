@@ -13,11 +13,15 @@ function saveGrade() {
     var id = $('#gradeId').val();
     var gradeName = $('#gradeName').val();
     var gradeRemark = $('#gradeRemark').val();
+    var from = $('#gradefrom').val();
+    var to = $('#gradeto').val();
     var isActive = $('#isActive').is(':checked');
 
     var grade = {
         id: id,
         name: gradeName,
+        from: from,
+        to: to,
         remark: gradeRemark,
         isactive: isActive
     };
@@ -27,6 +31,36 @@ function saveGrade() {
         swal("Warning", "Grade name cannot be empty!", "warning");
         return false; // Prevent form submission
     }
+
+    if (from === "") {
+        swal("Warning", "Grade From Marks cannot be empty!", "warning");
+        return false; // Prevent form submission
+    }
+
+    if (to === "") {
+        swal("Warning", "Grade To Marks cannot be empty!", "warning");
+        return false; // Prevent form submission
+    }
+
+    var gradeFrom = parseInt($("#gradefrom").val());
+    var gradeTo = parseInt($("#gradeto").val());
+
+    // Validate values
+    if (isNaN(gradeFrom) || gradeFrom < 0 || gradeFrom > 100) {
+        alert("Please enter a valid 'From' mark between 0 and 100.");
+        return false
+    }
+
+    if (isNaN(gradeTo) || gradeTo < 0 || gradeTo > 100) {
+        alert("Please enter a valid 'To' mark between 0 and 100.");
+        return false
+    }
+
+    if (gradeFrom > gradeTo) {
+        alert("'From' mark cannot be greater than 'To' mark.");
+        return false
+    }
+
 
     // Check for duplicate grade name in the table
     var isDuplicate = false;
@@ -68,11 +102,13 @@ function loadTable() {
         success: function (response) {
             var tbody = $('#tbodyid');
             tbody.empty(); // Clear the table body
-
+            console.log('response', response)
             response.forEach(function (grade) {
                 var row = `<tr>
                     <td hidden>${grade.id}</td>
                     <td>${grade.name}</td>
+                    <td>${grade.from}</td>
+                    <td>${grade.to}</td>
                     <td>${grade.remark}</td>
                     <td>${grade.isactive ? 'Yes' : 'No'}</td>
                     <td><button class="btn btn-warning" onclick="getGrade(${grade.id})">Edit</button></td>
@@ -117,6 +153,8 @@ function getGrade(gradeId) {
         success: function (response) {
             $('#gradeId').val(response.id);
             $('#gradeName').val(response.name);
+            $('#gradefrom').val(response.from);
+            $('#gradeto').val(response.to);
             $('#gradeRemark').val(response.remark);
             $('#isActive').prop('checked', response.isactive);
         },
@@ -144,6 +182,8 @@ function deleteGrade(gradeId) {
 function clearGrade() {
     $('#gradeId').val('0');
     $('#gradeName').val('');
+    $('#gradefrom').val('');
+    $('#gradeto').val('');
     $('#gradeRemark').val('');
     $('#isActive').prop('checked', false);
 }
