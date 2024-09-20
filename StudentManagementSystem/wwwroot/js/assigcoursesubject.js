@@ -58,6 +58,22 @@ function loadSubjectCourse() {
                             <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
                         </tr>`;
                     tbody.append(row);
+
+                    $('#courseTable').DataTable({
+                        destroy: true,
+                        searching: true, // Enable search functionality
+                        paging: true, // Enable pagination
+                        pageLength: 10, // Number of rows per page
+                        lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                        info: true, // Show table information
+                        language: {
+                            search: "Search records:", // Custom search placeholder
+                            paginate: {
+                                previous: "Prev",
+                                next: "Next"
+                            }
+                        }
+                    });
                 });
             } else {
                 console.error('Expected an array but got:', courses);
@@ -125,14 +141,10 @@ function clearForm() {
 // Initialize DataTable on document ready
 $(document).ready(function () {
     $.noConflict();
-
-    $('#courseTable').DataTable({
-        paging: false, // Disable pagination
-        searching: false, // Keep search functionality
-        ordering: true, // Keep sorting functionality
-        info: false // Optionally, hide the table information
-    });
-    alert('click');
+    // Check if DataTable is already initialized and destroy it if necessary
+    if ($.fn.DataTable.isDataTable('#courseTable')) {
+        $('#courseTable').DataTable().destroy();
+    }
 
     loadTable();
     loadSubject();
@@ -199,6 +211,22 @@ function loadtogrid() {
                             <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
                         </tr>`;
                     tbody.append(row);
+                });
+
+                $('#courseTable').DataTable({
+                    destroy: true,
+                    searching: true, // Enable search functionality
+                    paging: true, // Enable pagination
+                    pageLength: 10, // Number of rows per page
+                    lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                    info: true, // Show table information
+                    language: {
+                        search: "Search records:", // Custom search placeholder
+                        paginate: {
+                            previous: "Prev",
+                            next: "Next"
+                        }
+                    }
                 });
             },
             error: function (err) {
