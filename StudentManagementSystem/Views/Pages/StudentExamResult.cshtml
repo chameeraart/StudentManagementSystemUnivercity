@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Exam Details";
+}
+
+<div class="text-center">
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Filter Section -->
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card card-primary mt-5">
+                        <div class="card-header">
+                            <h3 class="card-title">Filter Exams by Student and Course</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Student Dropdown -->
+                            <div class="form-group">
+                                <label for="studentSelect">Select Student</label>
+                                <select class="form-control" id="studentDropdown">
+                                    <option value="">-- Select Student --</option>
+                                    <!-- Students will be loaded dynamically -->
+                                </select>
+                            </div>
+                            <!-- Course Dropdown -->
+                            <div class="form-group">
+                                <label for="courseSelect">Select Course</label>
+                                <select class="form-control" id="courseDropdown">
+                                    <option value="">-- Select Course --</option>
+                                    <!-- Courses will be loaded dynamically -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" id="filterbtn" onclick="filterExams()" class="btn btn-primary">Filter Exams</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exam Details Section -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title">Exam Details</h6>
+                        </div>
+                        <div class="card-body table-responsive p-0" id="examDataTable" style="display:none;">
+                            <table class="table table-hover text-nowrap" id="examTable">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Exam Date</th>
+                                        <th>Marks</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="examTableBody">
+                                    <!-- Exam details will be loaded here dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/studentExamResult.js"></script> <!-- Corrected syntax here -->
+<!-- Include jQuery -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<!-- DataTables CSS and JS -->
+<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<script src="~/dist/js/adminlte.min.js"></script>
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- Summernote CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+
+<!-- Summernote JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+<!-- FancyTable library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>
+<!-- Include jQuery UI -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">

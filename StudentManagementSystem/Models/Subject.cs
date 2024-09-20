@@ -11,6 +11,9 @@ namespace StudentManagementSystem.Models
         public int? examid { get; set; }
         [ForeignKey("examid")]
         public virtual Exam Exam { get; set; }
+        public int? courseid { get; set; }
+        [ForeignKey("courseid")]
+        public virtual Course Course { get; set; }
         public DateTime created_at { get; set; }
         public int created_by { get; set; }
         public DateTime? updated_at { get; set; }

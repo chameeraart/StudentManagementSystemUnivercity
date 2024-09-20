@@ -7,6 +7,7 @@
     }
     loadExam();
     loadTable();
+    loadCourse();
 
 });
 
@@ -15,11 +16,13 @@ function saveSubject() {
     var subjectName = $('#subjectName').val();
     var isActive = $('#isActive').is(':checked');
     var examid = $('#examDropdown').val();
+    var courseid = $('#courseDropdown').val();
 
     var subject = {
         id: id,
         name: subjectName,
         examid: examid,
+        courseid: courseid,
         isactive: isActive
     };
 
@@ -32,6 +35,12 @@ function saveSubject() {
     // Check if examid is empty
     if (examid === "" || examid === null) {
         swal("Warning", "Please select an exam!", "warning");
+        return false; // Prevent the form from submitting
+    }
+
+    // Check if course is empty
+    if (courseid === "" || courseid === null) {
+        swal("Warning", "Please select an course!", "warning");
         return false; // Prevent the form from submitting
     }
     
@@ -89,6 +98,8 @@ function loadTable() {
                     <td>${subject.name}</td>
                     <td>${subject.exam.examName}</td>
                     <td hidden>${subject.exam.id}</td>
+                     <td>${subject.course.name}</td>
+                    <td hidden>${subject.course.id}</td>
                     <td>${subject.isactive ? 'Yes' : 'No'}</td>
                     <td><button class="btn btn-warning" onclick="getSubject(${subject.id})">Edit</button></td>
                     <td><button class="btn btn-danger" onclick="deleteSubject(${subject.id})">Delete</button></td>
@@ -129,6 +140,7 @@ function getSubject(subjectId) {
             $('#subjectId').val(response.id);
             $('#subjectName').val(response.name);
             $('#examDropdown').val(response.exam.id);
+            $('#courseDropdown').val(response.course.id);
             $('#isActive').prop('checked', response.isactive);
         },
         error: function (err) {
@@ -154,6 +166,24 @@ function loadExam() {
     });
 }
 
+function loadCourse() {
+    $.ajax({
+        url: '/Course/getall',
+        type: 'GET',
+        success: function (response) {
+            var dropdown = $('#courseDropdown');
+            dropdown.empty();
+            dropdown.append('<option value="" disabled selected>Select a Course</option>');
+            response.forEach(function (course) {
+                dropdown.append($('<option></option>').attr('value', course.id).text(course.name));
+            });
+        },
+        error: function (err) {
+            console.error('Error loading course:', err);
+        }
+    });
+}
+
 function deleteSubject(subjectId) {
     $.ajax({
         url: '/subject/delete/' + subjectId,
@@ -175,4 +205,5 @@ function clearSubject() {
     $('#subjectName').val('');
     $('#isActive').prop('checked', true);
     $('#examDropdown').val('');
+    $('#courseDropdown').val('');
 }

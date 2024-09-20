@@ -19,7 +19,7 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult GetAll()
         {
-            var subjects = Context.subjects.Include(t =>t.Exam).Where(x => x.isactive == true).OrderBy(x => x.name);
+            var subjects = Context.subjects.Include(t =>t.Exam).Include(t =>t.Course).Where(x => x.isactive == true).OrderBy(x => x.name);
             return new ObjectResult(subjects);
         }
         public IActionResult LoadTable()
@@ -39,7 +39,7 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult get(int id)
         {
-            var subject = Context.subjects.Include(t =>t.Exam).Where(x => x.id == id).SingleOrDefault();
+            var subject = Context.subjects.Include(t =>t.Exam).Include(t =>t.Course).Where(x => x.id == id).SingleOrDefault();
             return new ObjectResult(subject);
         }
 

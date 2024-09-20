@@ -16,11 +16,13 @@
     <Content Remove="wwwroot\js\student.js" />
     <Content Remove="wwwroot\js\studentclass.js" />
     <Content Remove="wwwroot\js\studentExam.js" />
+    <Content Remove="wwwroot\js\studentExamResult.js" />
     <Content Remove="wwwroot\js\subject.js" />
     <Content Remove="wwwroot\js\user.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\studentExamResult.js" />
     <None Include="wwwroot\js\studentExam.js" />
     <None Include="wwwroot\js\assignCourseStudent.js" />
     <None Include="wwwroot\js\assignCourseExam.js" />

@@ -13,6 +13,11 @@ namespace StudentManagementSystem.Controllers
         {
             return View("~/Views/Pages/StudentExam.cshtml");
         }
+
+        public IActionResult StuduentExamResult()
+        {
+            return View("~/Views/Pages/StudentExamResult.cshtml");
+        }
         public StudentContext Context { get; }
         private readonly EmailService _emailService;
         public StudentExamController(StudentContext context, EmailService emailService)
