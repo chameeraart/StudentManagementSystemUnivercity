@@ -9,6 +9,7 @@
         public string ExamName { get; set; }
         public string Grade { get; set; }
         public int CourseId { get; set; }
+        public int Marks { get; set; }
         public string CourseName { get; set; }
     }
 }

@@ -5,6 +5,8 @@ using StudentManagementSystem.Models;
 using StudentManagementSystem.Services;
 using StudentManagementSystem.Email;
 using StudentManagementSystem.Dto;
+using StudentManagementSystem.Migrations;
+using System.Diagnostics;
 
 namespace StudentManagementSystem.Controllers
 {
@@ -33,19 +35,49 @@ namespace StudentManagementSystem.Controllers
             return new ObjectResult(examsmarks);
         }
 
-
-        public async Task<List<StudentResult>> GetFilteredResultsAsync(int studentId, int examId)
+        //[HttpGet("GetExam/{studentId}/{examId}")]
+        public async Task<IActionResult> GetExam(int studentId, int examId)
         {
-            // Execute the stored procedure using FromSqlRaw and map it to the StudentResult DTO
+            EmailBuilderCourse emailBuilder = new EmailBuilderCourse();
+            // Execute the stored procedure to retrieve student exam results
             var studentResults = await Context.studentResults
                 .FromSqlRaw("EXEC GetStudentExamResults @p0, @p1", studentId, examId)
                 .ToListAsync();
 
-            return studentResults;
+            // Check if results were found
+            if (studentResults == null || !studentResults.Any())
+            {
+                return NotFound("No exam results found for the provided student and exam.");
+            }
+
+            // Return 200 OK with the results
+            return Ok(studentResults);
         }
 
 
+        public async Task<IActionResult> SendEmail(int studentId, int examId)
+        {
+            EmailBuilderCourse emailBuilder = new EmailBuilderCourse();
+            // Execute the stored procedure to retrieve student exam results
+            var studentResults = await Context.studentResults
+                .FromSqlRaw("EXEC GetStudentExamResults @p0, @p1", studentId, examId)
+                .ToListAsync();
 
+            // Check if results were found
+            if (studentResults == null || !studentResults.Any())
+            {
+                return NotFound("No exam results found for the provided student and exam.");
+            }
+
+
+            string toEmail = "chameeramadusankap@gmail.com";
+            string subject = "Exam Result";
+            string body = emailBuilder.BuildExamResultEmail(studentResults);
+            _emailService.SendEmailAsync(toEmail, subject, body);
+
+            // Return 200 OK with the results
+            return Ok(studentResults);
+        }
 
 
         public IActionResult LoadTable()

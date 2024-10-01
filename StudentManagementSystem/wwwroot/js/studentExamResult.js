@@ -37,7 +37,7 @@ function loadStudent() {
 
 function loadSubjectCourse() {
     $.ajax({
-        url: '/AssignCourseStudent/getall',
+        url: '/StudentExam/GetExam',
         type: 'GET',
         success: function (response) {
             console.log('response', response);
@@ -82,6 +82,95 @@ function deleteassCourse(courseid) {
         }
     });
 }
+
+function filterExams() {
+    // Display a click alert for debugging
+
+
+    // Get the selected values from the dropdowns
+    var selectedCourse = $('#courseDropdown').val();
+    var selectedStudent = $('#studentDropdown').val();
+
+    // Check if both course and student are selected
+    if (!selectedCourse || !selectedStudent) {
+        alert('Please select both a course and a student.');
+        return;
+    }
+
+    // Log the selected values for debugging
+    console.log('Selected Course ID:', selectedCourse);
+    console.log('Selected Student ID:', selectedStudent);
+
+
+    $.ajax({
+        url: '/StudentExam/GetExam',
+        type: 'GET',
+        success: function (response) {
+            console.log('response', response);
+            var tbody = $('#tbodyid');
+            tbody.empty(); // Clear the table body
+
+            // Assuming the response is a list of StudentResult objects
+            if (Array.isArray(response)) {
+                response.forEach(function (studentResult) {
+                    var row = `<tr>
+                            <td hidden>${studentResult.studentId}</td>
+                            <td hidden>${studentResult.examId}</td>
+                            <td hidden>${studentResult.courseId}</td>
+                            <td>${studentResult.studentName}</td>
+                            <td>${studentResult.examName}</td>
+                            <td>${studentResult.courseName}</td>
+                            <td>${studentResult.grade}</td>
+                            <td>${studentResult.marks}</td>
+                            <td><button class="btn btn-primary" onclick="editStudentResult(${studentResult.id})">Edit</button></td>
+                            <td><button class="btn btn-danger" onclick="deleteStudentResult(${studentResult.id})">Delete</button></td>
+                        </tr>`;
+                    tbody.append(row);
+                });
+            } else {
+                console.error('Expected an array but got:', response);
+            }
+        },
+        error: function (err) {
+            console.error('Error loading table:', err);
+        }
+    });
+
+}
+
+function SendExams() {
+    // Display a click alert for debugging
+
+
+    // Get the selected values from the dropdowns
+    var selectedCourse = $('#courseDropdown').val();
+    var selectedStudent = $('#studentDropdown').val();
+
+    // Check if both course and student are selected
+    if (!selectedCourse || !selectedStudent) {
+        alert('Please select both a course and a student.');
+        return;
+    }
+
+    // Log the selected values for debugging
+    console.log('Selected Course ID:', selectedCourse);
+    console.log('Selected Student ID:', selectedStudent);
+
+
+    $.ajax({
+        url: '/StudentExam/SendEmail',
+        type: 'GET',
+        success: function (response) {
+            console.log('response', response);
+            var tbody = $('#tbodyid');
+        },
+        error: function (err) {
+            console.error('Error loading table:', err);
+        }
+    });
+
+}
+
 
 function saveData() {
     // Get form values
@@ -138,6 +227,15 @@ $(document).ready(function () {
     loadStudent();
     loadSubjectCourse();
     ;
+
+    $('#filterbtn').on('click', function () {
+        filterExams();
+    });
+
+
+    $('#sendEmailBtn').on('click', function () {
+        SendExams();
+    });
 
     $('#courseDropdown').change(function () {
         var courseId = $(this).val(); // Get the selected course ID
