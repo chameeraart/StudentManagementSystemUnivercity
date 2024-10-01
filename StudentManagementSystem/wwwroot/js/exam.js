@@ -113,6 +113,11 @@ function loadExamTable() {
                 tbody.append(row);
             });
 
+            // Initialize DataTables with export buttons
+            if ($.fn.DataTable.isDataTable('#examTable')) {
+                $('#examTable').DataTable().destroy();
+            }
+
             $('#examTable').DataTable({
                 destroy: true,
                 searching: true, // Enable search functionality
@@ -120,6 +125,29 @@ function loadExamTable() {
                 pageLength: 10, // Number of rows per page
                 lengthMenu: [5, 10, 20, 50], // Options for rows per page
                 info: true, // Show table information
+                dom: 'Bfrtip', // Include export buttons
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        className: 'btn btn-success'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Export Excel',
+                        className: 'btn btn-primary'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        className: 'btn btn-danger'
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        className: 'btn btn-info'
+                    }
+                ],
                 language: {
                     search: "Search records:", // Custom search placeholder
                     paginate: {
@@ -134,6 +162,7 @@ function loadExamTable() {
         }
     });
 }
+
 
 function getExam(examId) {
     $.ajax({

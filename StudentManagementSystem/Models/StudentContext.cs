@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StudentManagementSystem.Dto;
 namespace StudentManagementSystem.Models
 {
     public class StudentContext : DbContext
@@ -18,6 +19,12 @@ namespace StudentManagementSystem.Models
         public DbSet<CourseStudent> courseStudents { get; set; }
         public DbSet<CourseExam> courseExams { get; set; }
         public DbSet<ExamMark> ExamMarks { get; set; }
+        public DbSet<StudentResult> studentResults { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<StudentResult>().HasNoKey(); // No primary key because it's a DTO, not a table
+            base.OnModelCreating(modelBuilder);
+        }
 
     }
 

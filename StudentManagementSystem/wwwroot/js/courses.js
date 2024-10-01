@@ -75,6 +75,11 @@ function loadTable() {
                 tbody.append(row);
             });
 
+            // Initialize DataTables with export buttons
+            if ($.fn.DataTable.isDataTable('#courseTable')) {
+                $('#courseTable').DataTable().destroy();
+            }
+
             $('#courseTable').DataTable({
                 destroy: true,
                 searching: true, // Enable search functionality
@@ -82,6 +87,29 @@ function loadTable() {
                 pageLength: 10, // Number of rows per page
                 lengthMenu: [5, 10, 20, 50], // Options for rows per page
                 info: true, // Show table information
+                dom: 'Bfrtip', // Include buttons for exporting
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        className: 'btn btn-success'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Export Excel',
+                        className: 'btn btn-primary'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        className: 'btn btn-danger'
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        className: 'btn btn-info'
+                    }
+                ],
                 language: {
                     search: "Search records:", // Custom search placeholder
                     paginate: {
@@ -96,6 +124,7 @@ function loadTable() {
         }
     });
 }
+
 
 function getCourse(courseId) {
     $.ajax({

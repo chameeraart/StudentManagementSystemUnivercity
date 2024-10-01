@@ -117,7 +117,7 @@ function loadTable() {
                 tbody.append(row);
             });
 
-            // Initialize DataTables
+            // Initialize DataTables with export buttons
             if ($.fn.DataTable.isDataTable('#tableID')) {
                 $('#tableID').DataTable().destroy();
             }
@@ -135,7 +135,34 @@ function loadTable() {
                         previous: "Prev",
                         next: "Next"
                     }
-                }
+                },
+                dom: 'Bfrtip', // Include export buttons
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        titleAttr: 'CSV',
+                        className: 'btn btn-success'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Export Excel',
+                        titleAttr: 'Excel',
+                        className: 'btn btn-primary'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        titleAttr: 'PDF',
+                        className: 'btn btn-danger'
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        titleAttr: 'Print',
+                        className: 'btn btn-info'
+                    }
+                ]
             });
         },
         error: function (err) {
@@ -143,8 +170,6 @@ function loadTable() {
         }
     });
 }
-
-
 
 function getGrade(gradeId) {
     $.ajax({

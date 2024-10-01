@@ -148,23 +148,47 @@ function loadStudentTable() {
                 tbody.append(row);
             });
 
-            $("#studentTable").fancyTable({
+            // Initialize DataTables with export buttons
+            if ($.fn.DataTable.isDataTable('#studentTable')) {
+                $('#studentTable').DataTable().destroy();
+            }
+
+            $('#studentTable').DataTable({
                 destroy: true,
-                sortColumn: 0,
-                globalSearch: true,
-                globalSearchExcludeColumns: [0],
-                onInit: function () {
-                    console.log({ element: this });
-                },
-                onUpdate: function () {
-                    console.log({ element: this });
-                },
-                pagination: true,
-                lengthMenu: [[5, 10, 20, 50], [5, 10, 20, 50]],
-                paginationClass: "btn btn-light",
-                paginationClassActive: "active",
-                pagClosest: 3,
-                perPage: 10,
+                paging: true, // Enable pagination
+                pageLength: 10, // Rows per page
+                lengthMenu: [5, 10, 20, 50], // Options for number of rows per page
+                searching: true, // Enable search
+                dom: 'Bfrtip', // Include buttons
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        className: 'btn btn-success'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Export Excel',
+                        className: 'btn btn-primary'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        className: 'btn btn-danger'
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        className: 'btn btn-info'
+                    }
+                ],
+                language: {
+                    search: "Search:",
+                    paginate: {
+                        previous: "Prev",
+                        next: "Next"
+                    }
+                }
             });
         },
         error: function (err) {
@@ -172,7 +196,6 @@ function loadStudentTable() {
         }
     });
 }
-
 
 
 function getNextStudentIndex() {

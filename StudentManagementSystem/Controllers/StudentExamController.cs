@@ -4,6 +4,7 @@ using StudentManagementSystem.Email;
 using StudentManagementSystem.Models;
 using StudentManagementSystem.Services;
 using StudentManagementSystem.Email;
+using StudentManagementSystem.Dto;
 
 namespace StudentManagementSystem.Controllers
 {
@@ -31,6 +32,22 @@ namespace StudentManagementSystem.Controllers
             var examsmarks = Context.ExamMarks.Include(t =>t.Exam).Include(t =>t.Student).Where(x => x.isactive == true).OrderBy(x => x.Id);
             return new ObjectResult(examsmarks);
         }
+
+
+        public async Task<List<StudentResult>> GetFilteredResultsAsync(int studentId, int examId)
+        {
+            // Execute the stored procedure using FromSqlRaw and map it to the StudentResult DTO
+            var studentResults = await Context.studentResults
+                .FromSqlRaw("EXEC GetStudentExamResults @p0, @p1", studentId, examId)
+                .ToListAsync();
+
+            return studentResults;
+        }
+
+
+
+
+
         public IActionResult LoadTable()
         {
             var exams = Context.ExamMarks.OrderBy(x => x.Id);

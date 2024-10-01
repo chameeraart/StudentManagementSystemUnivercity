@@ -58,22 +58,50 @@ function loadSubjectCourse() {
                             <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
                         </tr>`;
                     tbody.append(row);
+                });
 
-                    $('#courseTable').DataTable({
-                        destroy: true,
-                        searching: true, // Enable search functionality
-                        paging: true, // Enable pagination
-                        pageLength: 10, // Number of rows per page
-                        lengthMenu: [5, 10, 20, 50], // Options for rows per page
-                        info: true, // Show table information
-                        language: {
-                            search: "Search records:", // Custom search placeholder
-                            paginate: {
-                                previous: "Prev",
-                                next: "Next"
-                            }
+                // Initialize DataTables with export buttons
+                if ($.fn.DataTable.isDataTable('#courseTable')) {
+                    $('#courseTable').DataTable().destroy();
+                }
+
+                $('#courseTable').DataTable({
+                    destroy: true,
+                    searching: true, // Enable search functionality
+                    paging: true, // Enable pagination
+                    pageLength: 10, // Number of rows per page
+                    lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                    info: true, // Show table information
+                    dom: 'Bfrtip', // Include export buttons
+                    buttons: [
+                        {
+                            extend: 'csvHtml5',
+                            text: 'Export CSV',
+                            className: 'btn btn-success'
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            text: 'Export Excel',
+                            className: 'btn btn-primary'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: 'Export PDF',
+                            className: 'btn btn-danger'
+                        },
+                        {
+                            extend: 'print',
+                            text: 'Print',
+                            className: 'btn btn-info'
                         }
-                    });
+                    ],
+                    language: {
+                        search: "Search records:", // Custom search placeholder
+                        paginate: {
+                            previous: "Prev",
+                            next: "Next"
+                        }
+                    }
                 });
             } else {
                 console.error('Expected an array but got:', courses);
@@ -84,6 +112,7 @@ function loadSubjectCourse() {
         }
     });
 }
+
 
 function deleteassCourse(courseid) {
     $.ajax({
