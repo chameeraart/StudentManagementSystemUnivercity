@@ -69,6 +69,17 @@ namespace StudentManagementSystem.Controllers
                 created_at = DateTime.Now,
                 created_by = 1 // Replace with actual user ID
             };
+            string formattedDate = studentDto.DateOfBirth.ToString("yyyyMMdd");
+
+
+            Users users = new Users();
+            users.username = studentDto.StudentEmail;
+            users.isactive = true;
+            users.password = formattedDate;
+            users.UserType = Users.UserTypes.User;
+            users.property_id = 100;
+            users.companyid = 100;
+
 
             if (studentDto.Photo != null && studentDto.Photo.Length > 0)
             {
@@ -82,6 +93,7 @@ namespace StudentManagementSystem.Controllers
             }
 
             Context.students.Add(student);
+            Context.Update(users);
             await Context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetStudent), new { id = student.Index }, student);
@@ -91,7 +103,7 @@ namespace StudentManagementSystem.Controllers
         public async Task<IActionResult> Update(string id, [FromForm] StudentDto studentDto)
         {
             var student = await Context.students.Where(t => t.id == Convert.ToInt32(studentDto.id)).FirstOrDefaultAsync();
-
+            string formattedDate = studentDto.DateOfBirth.ToString("yyyyMMdd");
             if (student == null)
             {
                 return NotFound();

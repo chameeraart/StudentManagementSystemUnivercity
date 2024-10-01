@@ -75,7 +75,9 @@ function saveStudent() {
     var telephone = $('#Telephone').val();
     var isActive = $('#active').is(':checked');
     var comment = $('#comments').val();
-    if (id === 0 || id === undefined) {
+
+    console.log(id)
+    if (id === "0" || id === undefined) {
         
         photo = $('#file')[0].files[0];
         console.log('insert', photo)
@@ -101,11 +103,16 @@ function saveStudent() {
     formData.append('Photo', photo);
     
 
-    if (id === 0 || id === undefined) {
+    if (id === undefined || id === null) {
         url = '/student/create'; // Insert URL
+    } else if (id === "0") {
+        url = '/student/create'; // Create URL for id 0
     } else {
         url = '/student/update'; // Update URL
     }
+
+
+    
     $.ajax({
         url: url,
         type: "POST",
