@@ -33,7 +33,7 @@ builder.Services.AddDbContext<StudentContext>(options =>
 });
 
 builder.Services.AddScoped<SessionManager>();
-
+builder.Services.AddScoped<Seed>();
 builder.Services.AddTransient<EmailService>();
 
 // Adding Authentication
@@ -72,6 +72,8 @@ using (var scope = app.Services.CreateScope())
     var initMigrations = services.GetRequiredService<InitMigrations>();
     var EmailService = services.GetRequiredService<EmailService>();
     initMigrations.MigrateDatabase();
+    var seed = services.GetRequiredService<Seed>();
+    seed.SeedData();
 }
 
 // Configure the HTTP request pipeline.
