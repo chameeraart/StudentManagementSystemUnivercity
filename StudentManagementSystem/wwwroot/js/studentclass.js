@@ -26,7 +26,6 @@ function saveClass() {
         isActive: isActive
     };
 
-    console.log(studentclass, 'studentclass');
     var url = '/class/create'; // Adjust URL as needed
 
     $.ajax({
@@ -115,7 +114,6 @@ function getClass(courseId) {
         url: '/class/get/' + courseId,
         type: 'GET',
         success: function (response) {
-            console.log('response', response)
             $('#classId').val(response.id);
             $('#className').val(response.name);
             $('#teacherName').val(response.teacherName);

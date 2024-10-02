@@ -39,7 +39,6 @@ function loadSubjectCourse() {
         url: '/AssignCourseSubject/getall',
         type: 'GET',
         success: function (response) {
-            console.log('response', response);
             var tbody = $('#tbodyid');
             tbody.empty(); // Clear the table body
 
@@ -187,7 +186,6 @@ $(document).ready(function () {
                 url: '/AssignCourseSubject/get/' + courseId,
                 type: 'GET',
                 success: function (response) {
-                    console.log('response', response);
                     var tbody = $('#tbodyid');
                     tbody.empty(); // Clear the table body
                     response.forEach(function (course) {
@@ -226,7 +224,6 @@ function loadtogrid() {
             url: '/AssignCourseSubject/get/' + courseId,
             type: 'GET',
             success: function (response) {
-                console.log('response', response);
                 var tbody = $('#tbodyid');
                 tbody.empty(); // Clear the table body
                 response.forEach(function (course) {

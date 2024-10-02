@@ -40,13 +40,11 @@ function loadSubjectCourse() {
         url: '/AssignCourseExam/getall',
         type: 'GET',
         success: function (response) {
-            console.log('response', response);
             var tbody = $('#tbodyid');
             tbody.empty(); // Clear the table body
 
             // Assuming the array is inside a property called 'courses'
             var courseExams = response.courses;
-            console.log('courses', courseExams)
             if (Array.isArray(courseExams)) {
                 courses.forEach(function (courseExams) {
                     var row = `<tr>
@@ -146,7 +144,6 @@ $(document).ready(function () {
                 url: '/AssignCourseExam/get/' + courseId,
                 type: 'GET',
                 success: function (response) {
-                    console.log('response', response);
                     var tbody = $('#tbodyid');
                     tbody.empty(); // Clear the table body
                     response.forEach(function (course) {

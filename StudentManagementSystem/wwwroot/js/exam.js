@@ -73,7 +73,6 @@ function saveExam() {
         isActive: isActive
     };
 
-    console.log(exam, 'exam');
     var url = '/exam/create'; // Adjust URL as needed
 
     $.ajax({

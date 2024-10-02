@@ -84,7 +84,6 @@ function loadExamMarks() {
     });
 }
 function getExam(courseId) {
-    console.log('courseId', courseId)
     $.ajax({
         url: '/StudentExam/get/' + courseId,
         type: 'GET',

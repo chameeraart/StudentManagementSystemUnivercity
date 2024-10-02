@@ -102,7 +102,6 @@ function loadTable() {
         success: function (response) {
             var tbody = $('#tbodyid');
             tbody.empty(); // Clear the table body
-            console.log('response', response)
             response.forEach(function (grade) {
                 var row = `<tr>
                     <td hidden>${grade.id}</td>

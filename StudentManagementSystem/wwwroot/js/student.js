@@ -76,15 +76,12 @@ function saveStudent() {
     var isActive = $('#active').is(':checked');
     var comment = $('#comments').val();
 
-    console.log(id)
     if (id === "0" || id === undefined) {
         
         photo = $('#file')[0].files[0];
-        console.log('insert', photo)
     }
     else {
         photo = $('#imageSrc').attr('src');
-        console.log('update', photo)
     }
     var formData = new FormData();
     formData.append('id', id);
@@ -138,7 +135,6 @@ function loadStudentTable() {
         success: function (response) {
             var tbody = $('#tbodyStudent');
             tbody.empty(); // Clear the table body
-            console.log('response', response);
             response.forEach(function (student) {
                 var row = `<tr>
                         <td hidden>${student.id}</td>
@@ -239,7 +235,6 @@ function getStudent(studentId) {
         url: '/student/GetStudent/' + studentId, // Adjust the URL based on your API route
         type: 'GET',
         success: function (response) {
-            console.log('response', response)
             // Populate the form fields with the retrieved student data
             $('#studentId').val(response.id);
             $('#index').val(response.index);

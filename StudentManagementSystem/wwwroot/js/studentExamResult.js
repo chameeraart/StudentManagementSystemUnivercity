@@ -40,13 +40,11 @@ function loadSubjectCourse() {
         url: '/StudentExam/GetExam',
         type: 'GET',
         success: function (response) {
-            console.log('response', response);
             var tbody = $('#tbodyid');
             tbody.empty(); // Clear the table body
 
             // Assuming the array is inside a property called 'courses'
             var courses = response.courses;
-            console.log('courses', courses)
             if (Array.isArray(courses)) {
                 courses.forEach(function (course) {
                     var row = `<tr>
@@ -93,13 +91,9 @@ function filterExams() {
 
     // Check if both course and student are selected
     if (!selectedCourse || !selectedStudent) {
-        alert('Please select both a course and a student.');
+        swal("Validation Error", "Please select both a course and a student!", "error");
         return;
     }
-
-    // Log the selected values for debugging
-    console.log('Selected Course ID:', selectedCourse);
-    console.log('Selected Student ID:', selectedStudent);
 
     var studentExam = {
         studentId: selectedStudent,
@@ -112,7 +106,6 @@ function filterExams() {
         contentType: 'application/json',
         data: JSON.stringify(studentExam),
         success: function (response) {
-            console.log('response', response);
             var tbody = $('#tbodyid');
             tbody.empty(); // Clear the table body
 
@@ -158,10 +151,6 @@ function SendExams() {
         return;
     }
 
-    // Log the selected values for debugging
-    console.log('Selected Course ID:', selectedCourse);
-    console.log('Selected Student ID:', selectedStudent);
-
     var studentExam = {
         studentId: selectedStudent,
         courseId: selectedCourse
@@ -173,7 +162,6 @@ function SendExams() {
         contentType: 'application/json',
         data: JSON.stringify(studentExam),
         success: function (response) {
-            console.log('response', response);
             var tbody = $('#tbodyid');
         },
         error: function (err) {
@@ -256,7 +244,6 @@ $(document).ready(function () {
                 url: '/AssignCourseStudent/get/' + courseId,
                 type: 'GET',
                 success: function (response) {
-                    console.log('response', response);
                     var tbody = $('#tbodyid');
                     tbody.empty(); // Clear the table body
                     response.forEach(function (course) {
