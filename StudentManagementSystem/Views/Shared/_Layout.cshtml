@@ -101,35 +101,35 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="GradeNavItem">
                             <a asp-area="" asp-controller="Grade" asp-action="Index" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>Grade</p>
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="CourseNavItem">
                             <a asp-area="" asp-controller="Course" asp-action="Index" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>Course</p>
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="ClassNavItem">
                             <a asp-area="" asp-controller="Class" asp-action="Index" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>Class</p>
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="ExamNavItem">
                             <a asp-area="" asp-controller="Exam" asp-action="Index" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>Exam</p>
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="UserNavItem">
                             <a asp-area="" asp-controller="User" asp-action="Index" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>User</p>
@@ -178,7 +178,7 @@
                             </ul>
                         </li> *@
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="AssignCourseStudentNavItem">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
@@ -196,7 +196,7 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="StudentExamNavItem">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
@@ -311,6 +311,13 @@
             const userRole = sessionStorage.getItem("userrole");
             if (userRole !== "Admin") {
                 document.getElementById("SubjectNavItem").style.display = "none";
+                document.getElementById("GradeNavItem").style.display = "none";
+                document.getElementById("CourseNavItem").style.display = "none";
+                document.getElementById("ClassNavItem").style.display = "none";
+                document.getElementById("ExamNavItem").style.display = "none";
+                document.getElementById("UserNavItem").style.display = "none";
+                document.getElementById("AssignCourseStudentNavItem").style.display = "none";
+                document.getElementById("StudentExamNavItem").style.display = "none";
             }
 
             // Logout functionality

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementSystem.Models;
 
@@ -11,9 +12,11 @@ using StudentManagementSystem.Models;
 namespace StudentManagementSystem.Migrations
 {
     [DbContext(typeof(StudentContext))]
-    partial class StudentContextModelSnapshot : ModelSnapshot
+    [Migration("20241002120942_userstudentid")]
+    partial class userstudentid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -293,9 +296,6 @@ namespace StudentManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("courseid")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("created_at")
                         .HasColumnType("datetime2");
 
@@ -327,8 +327,6 @@ namespace StudentManagementSystem.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("courseid");
 
                     b.HasIndex("examid");
 
@@ -647,10 +645,6 @@ namespace StudentManagementSystem.Migrations
 
             modelBuilder.Entity("StudentManagementSystem.Models.ExamMark", b =>
                 {
-                    b.HasOne("StudentManagementSystem.Models.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("courseid");
-
                     b.HasOne("StudentManagementSystem.Models.Exam", "Exam")
                         .WithMany()
                         .HasForeignKey("examid");
@@ -658,8 +652,6 @@ namespace StudentManagementSystem.Migrations
                     b.HasOne("StudentManagementSystem.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("studentid");
-
-                    b.Navigation("Course");
 
                     b.Navigation("Exam");
 

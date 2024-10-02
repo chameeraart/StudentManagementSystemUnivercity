@@ -31,7 +31,7 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult GetAll()
         {
-            var examsmarks = Context.ExamMarks.Include(t =>t.Exam).Include(t =>t.Student).Where(x => x.isactive == true).OrderBy(x => x.Id);
+            var examsmarks = Context.ExamMarks.Include(t =>t.Exam).Include(t =>t.Student).Include(t=>t.Course).Where(x => x.isactive == true).OrderBy(x => x.Id);
             return new ObjectResult(examsmarks);
         }
 

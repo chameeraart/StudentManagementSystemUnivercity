@@ -70,17 +70,6 @@ namespace StudentManagementSystem.Controllers
                 created_by = 1 // Replace with actual user ID
             };
             string formattedDate = studentDto.DateOfBirth.ToString("yyyyMMdd");
-
-
-            Users users = new Users();
-            users.username = studentDto.StudentEmail;
-            users.isactive = true;
-            users.password = formattedDate;
-            users.UserType = Users.UserTypes.User;
-            users.property_id = 100;
-            users.companyid = 100;
-
-
             if (studentDto.Photo != null && studentDto.Photo.Length > 0)
             {
                 // Handle file upload
@@ -93,6 +82,15 @@ namespace StudentManagementSystem.Controllers
             }
 
             Context.students.Add(student);
+            await Context.SaveChangesAsync();
+            Users users = new Users();
+            users.username = studentDto.StudentEmail;
+            users.isactive = true;
+            users.password = formattedDate;
+            users.UserType = Users.UserTypes.User;
+            users.property_id = 100;
+            users.companyid = 100;
+            users.studentId = student.id;
             Context.Update(users);
             await Context.SaveChangesAsync();
 

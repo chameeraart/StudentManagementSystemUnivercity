@@ -15,7 +15,23 @@
         }
     });
 }
-
+function loadCourse() {
+    $.ajax({
+        url: '/course/getall',
+        type: 'GET',
+        success: function (response) {
+            var dropdown = $('#courseDropdown');
+            dropdown.empty();
+            dropdown.append('<option value="" disabled selected>Select a Course</option>');
+            response.forEach(function (course) {
+                dropdown.append($('<option></option>').attr('value', course.id).text(course.name));
+            });
+        },
+        error: function (err) {
+            console.error('Error loading courses:', err);
+        }
+    });
+}
 function loadStudents() {
     $.ajax({
         url: '/student/getall',
@@ -47,8 +63,10 @@ function loadExamMarks() {
                     var row = `<tr>
                                         <td hidden>${examMark.id}</td>
                                         <td>${examMark.exam.examName}</td>
+                                        <td>${examMark.course.name}</td>
                                         <td hidden>${examMark.exam.id}</td>
                                         <td hidden>${examMark.student.id}</td>
+                                         <td>${examMark.course.id}</td>
                                         <td>${examMark.mark}</td>
                                         <td>${examMark.isactive ? 'Yes' : 'No'}</td>
                                          <td><button class="btn btn-danger" onclick="getExam(${examMark.id})">Edit</button></td>
@@ -75,6 +93,7 @@ function getExam(courseId) {
             $('#id').val(response.id);  // Assuming the ID is stored here
             $('#examDropdown').val(response.exam.id);  // Set the exam dropdown value
             $('#studentDropdown').val(response.student.id);  // Set the student dropdown value
+            $('#courseDropdown').val(response.course.id);  // Set the student dropdown value
             $('#Marks').val(response.mark);  // Set the marks field
             $('#isActive').prop('checked', response.isactive);  // Set active checkbox
         },
@@ -101,6 +120,7 @@ function deleteExamMark(markId) {
 function saveData() {
     var examId = $('#examDropdown').val();
     var studentId = $('#studentDropdown').val();
+    var courseId = $('#courseDropdown').val();
     var marks = $('#Marks').val();
     var isActive = $('#isActive').is(':checked');
     var id = $('#id').val();
@@ -108,6 +128,7 @@ function saveData() {
         id: id,
         examid: examId,
         studentid: studentId,
+        courseid: courseId,
         mark: marks,
         isactive: isActive
     };
@@ -119,6 +140,11 @@ function saveData() {
 
     if (!studentId) {
         swal("Error", "Please select a student.", "error");
+        return;
+    }
+
+    if (!courseId) {
+        swal("Error", "Please select a courseId.", "error");
         return;
     }
 
@@ -146,6 +172,7 @@ function saveData() {
 function clearForm() {
     $('#examDropdown').val('');
     $('#studentDropdown').val('');
+    $('#courseDropdown').val('');
     $('#Marks').val('');
     $('#isActive').prop('checked', true);
     $('#marksTable').DataTable().clear().draw();
@@ -162,5 +189,6 @@ $(document).ready(function () {
 
     loadExams();
     loadStudents();
+    loadCourse();
     loadExamMarks();
 });

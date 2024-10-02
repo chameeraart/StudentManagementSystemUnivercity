@@ -10,7 +10,7 @@ namespace StudentManagementSystem.Models
         public UserTypes UserType { get; set; }
         public int companyid { get; set; }
         public int property_id { get; set; }
-
+        public int? studentId { get; set; }
         [DefaultValue(true)]
         public bool isactive { get; set; }
 

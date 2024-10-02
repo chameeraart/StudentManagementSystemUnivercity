@@ -26,7 +26,7 @@ namespace StudentManagementSystem.Controllers
         [AllowAnonymous]
         public IActionResult Login([FromBody] LoginDto loginDto)
         {
-
+            int studentid = 0;
             // TODO: Encrypt password
             var user = _context.users
                 .Where(t =>
@@ -46,6 +46,15 @@ namespace StudentManagementSystem.Controllers
             if (user.UserType == StudentManagementSystem.Models.Users.UserTypes.Admin)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "admin"));
+            }
+
+            if (user.UserType == StudentManagementSystem.Models.Users.UserTypes.User)
+            {
+                studentid= Convert.ToInt32(user.studentId);
+            }
+            else
+            {
+                studentid = 0;
             }
 
             // symmetric security key
@@ -78,7 +87,7 @@ namespace StudentManagementSystem.Controllers
                 TokenType = "bearer",
                 userrole = user?.UserType.ToString(),
                 username = user?.username,
-
+                studentid = studentid,
 
             });
         }

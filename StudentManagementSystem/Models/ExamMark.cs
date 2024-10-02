@@ -14,6 +14,9 @@ namespace StudentManagementSystem.Models
         public int? studentid { get; set; }
         [ForeignKey("studentid")]
         public virtual Student Student { get; set; }
+        public int? courseid { get; set; }
+        [ForeignKey("courseid")]
+        public virtual Course Course { get; set; }
         public decimal mark { get; set; }
         public DateTime created_at { get; set; }
         public int created_by { get; set; }

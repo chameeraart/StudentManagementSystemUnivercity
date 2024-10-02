@@ -30,6 +30,7 @@
                 sessionStorage.setItem("userrole", data.userrole);
                 sessionStorage.setItem("uid", data.userID);
                 sessionStorage.setItem("username", data.username);
+                sessionStorage.setItem("studentId", data.studentid);
                 window.location.href = "/Home/Index";
             },
             error: function () {

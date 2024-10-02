@@ -27,6 +27,14 @@
                                         <!-- Options will be dynamically loaded here -->
                                     </select>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="courseDropdown">Select Course</label>
+                                    <select class="form-control" id="courseDropdown">
+                                        <!-- Options will be dynamically loaded here -->
+                                    </select>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="Marks">Enter Marks</label>
                                     <input type="number" class="form-control" id="Marks" placeholder="Enter Marks" autocomplete="off" step="1" min="0" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
@@ -58,8 +66,10 @@
                                     <tr>
                                         <th hidden>ExamStudentId</th>
                                         <th>Exam Name</th>
+                                        <th>Course Name</th>
                                         <th hidden>ExamId</th>
                                         <th hidden>StudentId</th>
+                                        <th hidden>CourseId</th>
                                         <th>Marks</th>
                                         <th>Active</th>
                                         <th>Edit</th>
