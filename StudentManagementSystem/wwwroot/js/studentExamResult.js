@@ -101,10 +101,16 @@ function filterExams() {
     console.log('Selected Course ID:', selectedCourse);
     console.log('Selected Student ID:', selectedStudent);
 
+    var studentExam = {
+        studentId: selectedStudent,
+        courseId: selectedCourse
+    };
 
     $.ajax({
         url: '/StudentExam/GetExam',
-        type: 'GET',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(studentExam),
         success: function (response) {
             console.log('response', response);
             var tbody = $('#tbodyid');
@@ -156,10 +162,16 @@ function SendExams() {
     console.log('Selected Course ID:', selectedCourse);
     console.log('Selected Student ID:', selectedStudent);
 
+    var studentExam = {
+        studentId: selectedStudent,
+        courseId: selectedCourse
+    };
 
     $.ajax({
         url: '/StudentExam/SendEmail',
-        type: 'GET',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(studentExam),
         success: function (response) {
             console.log('response', response);
             var tbody = $('#tbodyid');

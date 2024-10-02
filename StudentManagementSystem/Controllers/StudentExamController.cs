@@ -36,12 +36,12 @@ namespace StudentManagementSystem.Controllers
         }
 
         //[HttpGet("GetExam/{studentId}/{examId}")]
-        public async Task<IActionResult> GetExam(int studentId, int examId)
+        public async Task<IActionResult> GetExam([FromBody] StudentExam studentExam)
         {
             EmailBuilderCourse emailBuilder = new EmailBuilderCourse();
             // Execute the stored procedure to retrieve student exam results
             var studentResults = await Context.studentResults
-                .FromSqlRaw("EXEC GetStudentExamResults @p0, @p1", studentId, examId)
+                .FromSqlRaw("EXEC GetStudentExamResults @p0, @p1", studentExam.studentId, studentExam.courseId)
                 .ToListAsync();
 
             // Check if results were found
@@ -55,12 +55,12 @@ namespace StudentManagementSystem.Controllers
         }
 
 
-        public async Task<IActionResult> SendEmail(int studentId, int examId)
+        public async Task<IActionResult> SendEmail([FromBody] StudentExam studentExam)
         {
             EmailBuilderCourse emailBuilder = new EmailBuilderCourse();
             // Execute the stored procedure to retrieve student exam results
             var studentResults = await Context.studentResults
-                .FromSqlRaw("EXEC GetStudentExamResults @p0, @p1", studentId, examId)
+                .FromSqlRaw("EXEC GetStudentExamResults @p0, @p1", studentExam.studentId, studentExam.courseId)
                 .ToListAsync();
 
             // Check if results were found
@@ -69,8 +69,8 @@ namespace StudentManagementSystem.Controllers
                 return NotFound("No exam results found for the provided student and exam.");
             }
 
-
-            string toEmail = "chameeramadusankap@gmail.com";
+            var student = Context.students.Where(x => x.id == studentExam.studentId).FirstOrDefault();
+            string toEmail = student.StudentEmail;
             string subject = "Exam Result";
             string body = emailBuilder.BuildExamResultEmail(studentResults);
             _emailService.SendEmailAsync(toEmail, subject, body);
