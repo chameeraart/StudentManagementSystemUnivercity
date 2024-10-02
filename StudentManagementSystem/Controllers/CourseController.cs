@@ -18,7 +18,7 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult GetAll()
         {
-            var courses = Context.courses.Where(x => x.isactive == true).OrderBy(x => x.name);
+            var courses = Context.courses.Where(x => x.isactive == true);
             return new ObjectResult(courses);
         }
         public IActionResult LoadTable()

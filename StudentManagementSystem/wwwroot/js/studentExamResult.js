@@ -123,10 +123,56 @@ function filterExams() {
                             <td>${studentResult.courseName}</td>
                             <td>${studentResult.grade}</td>
                             <td>${studentResult.marks}</td>
-                            <td><button class="btn btn-primary" onclick="editStudentResult(${studentResult.id})">Edit</button></td>
-                            <td><button class="btn btn-danger" onclick="deleteStudentResult(${studentResult.id})">Delete</button></td>
                         </tr>`;
                     tbody.append(row);
+
+                    if ($.fn.DataTable.isDataTable('#marksTable')) {
+                        $('#marksTable').DataTable().destroy();
+                    }
+
+                    $('#marksTable').DataTable({
+                        destroy: true,
+                        searching: true, // Enable search functionality
+                        paging: true, // Enable pagination
+                        pageLength: 10, // Number of rows per page
+                        lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                        info: true, // Show table information
+                        language: {
+                            search: "Search records:", // Custom search placeholder
+                            paginate: {
+                                previous: "Prev",
+                                next: "Next"
+                            }
+                        },
+                        dom: 'Bfrtip', // Include export buttons
+                        buttons: [
+                            {
+                                extend: 'csvHtml5',
+                                text: 'Export CSV',
+                                titleAttr: 'CSV',
+                                className: 'btn btn-success'
+                            },
+                            {
+                                extend: 'excelHtml5',
+                                text: 'Export Excel',
+                                titleAttr: 'Excel',
+                                className: 'btn btn-primary'
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                text: 'Export PDF',
+                                titleAttr: 'PDF',
+                                className: 'btn btn-danger'
+                            },
+                            {
+                                extend: 'print',
+                                text: 'Print',
+                                titleAttr: 'Print',
+                                className: 'btn btn-info'
+                            }
+                        ]
+                    });
+
                 });
             } else {
                 console.error('Expected an array but got:', response);
@@ -211,19 +257,18 @@ function clearForm() {
     $('#courseDropdown').val('');
     $('#studentDropdown').val('');
     $('#isActive').prop('checked', true);
-    $('#courseTable').DataTable().clear().draw();
+    $('#marksTable').DataTable().clear().draw();
 }
 
 // Initialize DataTable on document ready
 $(document).ready(function () {
     $.noConflict();
 
-    $('#courseTable').DataTable({
-        paging: false, // Disable pagination
-        searching: false, // Keep search functionality
-        ordering: true, // Keep sorting functionality
-        info: false // Optionally, hide the table information
-    });
+
+    // Check if DataTable is already initialized and destroy it if necessary
+    if ($.fn.DataTable.isDataTable('#marksTable')) {
+        $('#marksTable').DataTable().destroy();
+    }
 
     loadTable();
     loadStudent();
@@ -239,34 +284,5 @@ $(document).ready(function () {
 
     $('#sendEmailBtn').on('click', function () {
         SendExams();
-    });
-
-    $('#courseDropdown').change(function () {
-        var courseId = $(this).val(); // Get the selected course ID
-        if (courseId > 0) {
-            $.ajax({
-                url: '/AssignCourseStudent/get/' + courseId,
-                type: 'GET',
-                success: function (response) {
-                    var tbody = $('#tbodyid');
-                    tbody.empty(); // Clear the table body
-                    response.forEach(function (course) {
-                        var row = `<tr>
-                            <td hidden>${course.id}</td>
-                            <td>${course.course.name}</td>
-                            <td hidden>${course.course.id}</td>
-                            <td hidden>${course.student.id}</td>
-                             <td>${course.student.fullName}</td>
-                            <td>${course.isactive ? 'Yes' : 'No'}</td>
-                            <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
-                        </tr>`;
-                        tbody.append(row);
-                    });
-                },
-                error: function (err) {
-                    console.error('Error fetching course details:', err);
-                }
-            });
-        }
     });
 });

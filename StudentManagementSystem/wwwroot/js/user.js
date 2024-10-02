@@ -66,6 +66,10 @@ function loadUsers() {
             });
 
 
+            if ($.fn.DataTable.isDataTable('#userTable')) {
+                $('#userTable').DataTable().destroy();
+            }
+
             $('#userTable').DataTable({
                 destroy: true,
                 searching: true, // Enable search functionality
@@ -79,8 +83,49 @@ function loadUsers() {
                         previous: "Prev",
                         next: "Next"
                     }
-                }
+                },
+                dom: 'Bfrtip', // Include export buttons
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        titleAttr: 'CSV',
+                        className: 'btn btn-success',
+                        exportOptions: {
+                            columns: [1,2,3,4,5] // Select specific columns to export (0-based index)
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Export Excel',
+                        titleAttr: 'Excel',
+                        className: 'btn btn-primary',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        titleAttr: 'PDF',
+                        className: 'btn btn-danger',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        titleAttr: 'Print',
+                        className: 'btn btn-info',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5] // Select specific columns to print
+                        }
+                    }
+                ]
             });
+
+
         },
         error: function (error) {
             swal("Error", "Failed to load users", "error");

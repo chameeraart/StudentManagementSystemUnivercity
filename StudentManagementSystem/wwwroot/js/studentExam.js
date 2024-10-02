@@ -49,30 +49,90 @@ function loadStudents() {
         }
     });
 }
-
 function loadExamMarks() {
     $.ajax({
         url: '/StudentExam/getall',
         type: 'GET',
         success: function (response) {
             var tbody = $('#tbodyid');
-            tbody.empty(); // Clear the table body
+            tbody.empty(); // Clear the table body 
 
             if (Array.isArray(response)) {
                 response.forEach(function (examMark) {
                     var row = `<tr>
-                                        <td hidden>${examMark.id}</td>
-                                        <td>${examMark.exam.examName}</td>
-                                        <td>${examMark.course.name}</td>
-                                        <td hidden>${examMark.exam.id}</td>
-                                        <td hidden>${examMark.student.id}</td>
-                                         <td>${examMark.course.id}</td>
-                                        <td>${examMark.mark}</td>
-                                        <td>${examMark.isactive ? 'Yes' : 'No'}</td>
-                                         <td><button class="btn btn-danger" onclick="getExam(${examMark.id})">Edit</button></td>
-                                        <td><button class="btn btn-danger" onclick="deleteExamMark(${examMark.id})">Delete</button></td>
-                                    </tr>`;
+                                    <td hidden>${examMark.id}</td>
+                                    <td>${examMark.student.fullName}</td>
+                                    <td>${examMark.exam.examName}</td>
+                                    <td>${examMark.course.name}</td>
+                                    <td hidden>${examMark.exam.id}</td>
+                                    <td hidden>${examMark.student.id}</td>
+                                    <td hidden>${examMark.course.id}</td>
+                                    <td>${examMark.mark}</td>
+                                    <td>${examMark.isactive ? 'Yes' : 'No'}</td>
+                                    <td><button class="btn btn-warning" onclick="getExam(${examMark.id})">Edit</button></td>
+                                    <td><button class="btn btn-danger" onclick="deleteExamMark(${examMark.id})">Delete</button></td>
+                                </tr>`;
                     tbody.append(row);
+                });
+
+                // Destroy existing DataTable if exists
+                if ($.fn.DataTable.isDataTable('#marksTable')) {
+                    $('#marksTable').DataTable().destroy();
+                }
+
+                // Initialize DataTable after populating rows
+                $('#marksTable').DataTable({
+                    searching: true, // Enable search functionality
+                    paging: true, // Enable pagination
+                    pageLength: 10, // Number of rows per page
+                    lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                    info: true, // Show table information
+                    language: {
+                        search: "Search records:", // Custom search placeholder
+                        paginate: {
+                            previous: "Prev",
+                            next: "Next"
+                        }
+                    },
+                    dom: 'Bfrtip', // Include export buttons
+                    buttons: [
+                        {
+                            extend: 'csvHtml5',
+                            text: 'Export CSV',
+                            titleAttr: 'CSV',
+                            className: 'btn btn-success',
+                            exportOptions: {
+                                columns: [1, 2,3, 7, 8] // Select specific columns to export
+                            }
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            text: 'Export Excel',
+                            titleAttr: 'Excel',
+                            className: 'btn btn-primary',
+                            exportOptions: {
+                                columns: [1, 2,3, 7, 8] // Select specific columns to export
+                            }
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: 'Export PDF',
+                            titleAttr: 'PDF',
+                            className: 'btn btn-danger',
+                            exportOptions: {
+                                columns: [1, 2,3, 7, 8] // Select specific columns to export
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: 'Print',
+                            titleAttr: 'Print',
+                            className: 'btn btn-info',
+                            exportOptions: {
+                                columns: [1, 2,3, 7, 8] // Select specific columns to export
+                            }
+                        }
+                    ]
                 });
             } else {
                 console.error('Expected an array but got:', response);
@@ -83,6 +143,89 @@ function loadExamMarks() {
         }
     });
 }
+
+//function loadExamMarks() {
+//    $.ajax({
+//        url: '/StudentExam/getall',
+//        type: 'GET',
+//        success: function (response) {
+//            var tbody = $('#tbodyid');
+//            tbody.empty(); // Clear the table body
+
+//            if (Array.isArray(response)) {
+//                response.forEach(function (examMark) {
+//                    var row = `<tr>
+//                                        <td hidden>${examMark.id}</td>
+//                                        <td>${examMark.exam.examName}</td>
+//                                        <td>${examMark.course.name}</td>
+//                                        <td hidden>${examMark.exam.id}</td>
+//                                        <td hidden>${examMark.student.id}</td>
+//                                        <td hidden>${examMark.course.id}</td>
+//                                        <td>${examMark.mark}</td>
+//                                        <td>${examMark.isactive ? 'Yes' : 'No'}</td>
+//                                         <td><button class="btn btn-danger" onclick="getExam(${examMark.id})">Edit</button></td>
+//                                        <td><button class="btn btn-danger" onclick="deleteExamMark(${examMark.id})">Delete</button></td>
+//                                    </tr>`;
+//                    tbody.append(row);
+
+
+//                    if ($.fn.DataTable.isDataTable('#marksTable')) {
+//                        $('#marksTable').DataTable().destroy();
+//                    }
+
+//                    $('#marksTable').DataTable({
+//                        destroy: true,
+//                        searching: true, // Enable search functionality
+//                        paging: true, // Enable pagination
+//                        pageLength: 10, // Number of rows per page
+//                        lengthMenu: [5, 10, 20, 50], // Options for rows per page
+//                        info: true, // Show table information
+//                        language: {
+//                            search: "Search records:", // Custom search placeholder
+//                            paginate: {
+//                                previous: "Prev",
+//                                next: "Next"
+//                            }
+//                        },
+//                        dom: 'Bfrtip', // Include export buttons
+//                        buttons: [
+//                            {
+//                                extend: 'csvHtml5',
+//                                text: 'Export CSV',
+//                                titleAttr: 'CSV',
+//                                className: 'btn btn-success'
+//                            },
+//                            {
+//                                extend: 'excelHtml5',
+//                                text: 'Export Excel',
+//                                titleAttr: 'Excel',
+//                                className: 'btn btn-primary'
+//                            },
+//                            {
+//                                extend: 'pdfHtml5',
+//                                text: 'Export PDF',
+//                                titleAttr: 'PDF',
+//                                className: 'btn btn-danger'
+//                            },
+//                            {
+//                                extend: 'print',
+//                                text: 'Print',
+//                                titleAttr: 'Print',
+//                                className: 'btn btn-info'
+//                            }
+//                        ]
+//                    });
+
+//                });
+//            } else {
+//                console.error('Expected an array but got:', response);
+//            }
+//        },
+//        error: function (err) {
+//            console.error('Error loading marks table:', err);
+//        }
+//    });
+//}
 function getExam(courseId) {
     $.ajax({
         url: '/StudentExam/get/' + courseId,
@@ -179,12 +322,11 @@ function clearForm() {
 
 $(document).ready(function () {
     $.noConflict();
-    $('#marksTable').DataTable({
-        paging: false,
-        searching: false,
-        ordering: true,
-        info: false
-    });
+
+    // Check if DataTable is already initialized and destroy it if necessary
+    if ($.fn.DataTable.isDataTable('#marksTable')) {
+        $('#marksTable').DataTable().destroy();
+    }
 
     loadExams();
     loadStudents();

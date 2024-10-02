@@ -123,7 +123,7 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult get(int id)
         {
-            var exam = Context.ExamMarks.Include(t => t.Exam).Include(t => t.Student).Where(x => x.Id == id).SingleOrDefault();
+            var exam = Context.ExamMarks.Include(t => t.Exam).Include(t => t.Student).Include(t => t.Course).Where(x => x.Id == id).SingleOrDefault();
             return new ObjectResult(exam);
         }
 
