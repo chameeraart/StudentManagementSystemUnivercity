@@ -31,6 +31,19 @@ namespace StudentManagementSystem.Controllers
             return await Context.students.ToListAsync();
         }
 
+        public async Task<ActionResult<IEnumerable<Student>>> getallForuser(int id)
+        {
+            if (id == 0)
+            {
+                return await Context.students.ToListAsync();
+            }
+            else
+            {
+                return await Context.students.Where(t => t.id == id).ToListAsync();
+            }
+           
+        }
+
         public IActionResult GetAllStudent()
         {
             var courses = Context.students.Where(x => x.isactive == true).OrderBy(x => x.FullName);

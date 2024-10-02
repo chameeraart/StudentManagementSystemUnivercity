@@ -129,8 +129,9 @@ function saveStudent() {
 }
 
 function loadStudentTable() {
+    const studentid = sessionStorage.getItem("studentId");
     $.ajax({
-        url: '/student/getall',
+        url: '/student/getallForuser/' + studentid,
         type: 'GET',
         success: function (response) {
             var tbody = $('#tbodyStudent');

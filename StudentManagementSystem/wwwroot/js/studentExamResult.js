@@ -18,8 +18,10 @@ function loadTable() {
 }
 
 function loadStudent() {
+    const studentid = sessionStorage.getItem("studentId");
+
     $.ajax({
-        url: '/student/getall',
+        url: '/student/getallForuser/' + studentid,
         type: 'GET',
         success: function (response) {
             var dropdown = $('#studentDropdown');
@@ -227,6 +229,8 @@ $(document).ready(function () {
     loadStudent();
     loadSubjectCourse();
     ;
+
+
 
     $('#filterbtn').on('click', function () {
         filterExams();
