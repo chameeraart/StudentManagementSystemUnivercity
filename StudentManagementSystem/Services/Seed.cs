@@ -16,13 +16,13 @@ namespace StudentManagementSystem.Services
         {
 
 
-            var users = Context.users;
+            var users = Context.users.ToList();
 
-            if (users == null)
+            if (users.Count==0)
             {
                 var userlist = new List<Users> {
-                   new Users {username="admin",password="admin",UserType= StudentManagementSystem.Models.Users.UserTypes.Admin,isactive=true},
-                        new Users {username="ruvi",password="123",UserType= StudentManagementSystem.Models.Users.UserTypes.Admin, isactive = true},
+                   new Users {username="admin",password="admin",UserType= StudentManagementSystem.Models.Users.UserTypes.Admin,isactive=true,studentId=0},
+                        new Users {username="ruvi",password="123",UserType= StudentManagementSystem.Models.Users.UserTypes.Admin, isactive = true,studentId=0},
             };
 
                 Context.AddRange(userlist);
