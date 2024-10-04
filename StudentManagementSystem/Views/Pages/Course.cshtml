@@ -24,11 +24,9 @@
                                     <label class="form-check-label" for="isActive">Active</label>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
+                           <div class="card-footer text-center">
                                     <button type="button" id="savebtn" onclick="saveCourse()" class="btn btn-primary me-2">Save</button>
                                     <button type="button" id="clearbtn" onclick="clearCourse()" class="btn btn-danger">Clear</button>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -62,7 +60,6 @@
         </div>
     </section>
 </div>
-
 <!-- Custom CSS -->
 <style>
     body, html {
@@ -80,40 +77,59 @@
         margin: 15px 0;
     }
 
-    /* Make the table take the full available height */
-    .table-responsive {
-        height: 100%;
-    }
-
-    /* Adjust table styling for better UI */
-    table {
+    /* Ensure full width for table */
+    .table {
         width: 100%;
         margin-bottom: 1rem;
         color: #212529;
         background-color: white;
+        table-layout: fixed; /* This ensures even column widths */
     }
 
-        table th, table td {
-            text-align: center;
-            padding: 15px;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        table th {
+        /* Ensure headers are properly aligned and centered */
+        .table th {
             background-color: #007bff;
             color: white;
+            text-align: center; /* Center-align header text */
+            vertical-align: middle;
+            padding: 15px;
+            white-space: nowrap; /* Prevent header text from wrapping */
         }
 
-        table td {
+        /* Adjust table cell styling */
+        .table td {
             background-color: #f8f9fa;
+            text-align: left; /* Center-align table data */
+            vertical-align: middle;
+            padding: 15px;
         }
 
-        /* Hover effect */
-        table tr:hover {
-            background-color: #d6e9f8;
-        }
+    /* Hover effect for rows */
+    .table-hover tbody tr:hover {
+        background-color: #d6e9f8;
+    }
+
+
+    /* Make sure table headers are evenly distributed */
+    .table th, .table td {
+        width: auto;
+        white-space: nowrap;
+    }
+
+    /* Make sure table headers and data cells are aligned properly */
+    .table thead th {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .table td {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
 </style>
 
+<!-- Include jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/courses.js"></script>
 <!-- Include jQuery -->
@@ -135,7 +151,11 @@
 <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
@@ -152,6 +172,5 @@
 <!-- Include jQuery UI -->
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-
 
 

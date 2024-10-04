@@ -85,9 +85,6 @@ function deleteassCourse(courseid) {
 }
 
 function filterExams() {
-    // Display a click alert for debugging
-
-
     // Get the selected values from the dropdowns
     var selectedCourse = $('#courseDropdown').val();
     var selectedStudent = $('#studentDropdown').val();
@@ -112,8 +109,11 @@ function filterExams() {
             var tbody = $('#tbodyid');
             tbody.empty(); // Clear the table body
 
+            console.log('response', response);
+
             // Assuming the response is a list of StudentResult objects
             if (Array.isArray(response)) {
+
                 response.forEach(function (studentResult) {
                     var row = `<tr>
                             <td hidden>${studentResult.studentId}</td>
@@ -126,55 +126,55 @@ function filterExams() {
                             <td>${studentResult.marks}</td>
                         </tr>`;
                     tbody.append(row);
-
-                    if ($.fn.DataTable.isDataTable('#marksTable')) {
-                        $('#marksTable').DataTable().destroy();
-                    }
-
-                    $('#marksTable').DataTable({
-                        destroy: true,
-                        searching: true, // Enable search functionality
-                        paging: true, // Enable pagination
-                        pageLength: 10, // Number of rows per page
-                        lengthMenu: [5, 10, 20, 50], // Options for rows per page
-                        info: true, // Show table information
-                        language: {
-                            search: "Search records:", // Custom search placeholder
-                            paginate: {
-                                previous: "Prev",
-                                next: "Next"
-                            }
-                        },
-                        dom: 'Bfrtip', // Include export buttons
-                        buttons: [
-                            {
-                                extend: 'csvHtml5',
-                                text: 'Export CSV',
-                                titleAttr: 'CSV',
-                                className: 'btn btn-success'
-                            },
-                            {
-                                extend: 'excelHtml5',
-                                text: 'Export Excel',
-                                titleAttr: 'Excel',
-                                className: 'btn btn-primary'
-                            },
-                            {
-                                extend: 'pdfHtml5',
-                                text: 'Export PDF',
-                                titleAttr: 'PDF',
-                                className: 'btn btn-danger'
-                            },
-                            {
-                                extend: 'print',
-                                text: 'Print',
-                                titleAttr: 'Print',
-                                className: 'btn btn-info'
-                            }
-                        ]
-                    });
-
                 });
+
+                // Destroy and re-initialize the DataTable outside the loop
+                if ($.fn.DataTable.isDataTable('#marksTable')) {
+                    $('#marksTable').DataTable().destroy();
+                }
+
+                $('#marksTable').DataTable({
+                    searching: true, // Enable search functionality
+                    paging: true, // Enable pagination
+                    pageLength: 10, // Number of rows per page
+                    lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                    info: true, // Show table information
+                    language: {
+                        search: "Search records:", // Custom search placeholder
+                        paginate: {
+                            previous: "Prev",
+                            next: "Next"
+                        }
+                    },
+                    dom: 'Bfrtip', // Include export buttons
+                    buttons: [
+                        {
+                            extend: 'csvHtml5',
+                            text: 'Export CSV',
+                            titleAttr: 'CSV',
+                            className: 'btn btn-success'
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            text: 'Export Excel',
+                            titleAttr: 'Excel',
+                            className: 'btn btn-primary'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: 'Export PDF',
+                            titleAttr: 'PDF',
+                            className: 'btn btn-danger'
+                        },
+                        {
+                            extend: 'print',
+                            text: 'Print',
+                            titleAttr: 'Print',
+                            className: 'btn btn-info'
+                        }
+                    ]
+                });
+
             } else {
                 console.error('Expected an array but got:', response);
             }
@@ -183,8 +183,9 @@ function filterExams() {
             console.error('Error loading table:', err);
         }
     });
-
 }
+
+
 
 function SendExams() {
     // Display a click alert for debugging

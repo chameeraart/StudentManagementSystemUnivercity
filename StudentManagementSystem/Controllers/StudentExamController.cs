@@ -36,6 +36,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         //[HttpGet("GetExam/{studentId}/{examId}")]
+        [HttpPost]
         public async Task<IActionResult> GetExam([FromBody] StudentExam studentExam)
         {
             EmailBuilderCourse emailBuilder = new EmailBuilderCourse();

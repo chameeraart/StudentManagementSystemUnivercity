@@ -16,6 +16,30 @@ function validateStudentForm() {
     var telephone = $('#Telephone').val();
     var comment = $('#comments').val();
 
+    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!emailPattern.test(studentEmail)) {
+        $('#sEmail').addClass('is-invalid');  // Add Bootstrap's invalid class
+        // Show SweetAlert for invalid email
+        swal("Validation Error", "Please enter a valid email address", "error");
+        return;
+    } else {
+        $('#sEmail').removeClass('is-invalid');  // Remove invalid class if valid
+        // Perform further actions (form submission, etc.)
+        swal("Success", "Form submitted successfully!", "success");
+    }
+
+    if (!emailPattern.test(guardianEmail)) {
+        $('#Email').addClass('is-invalid');  // Add Bootstrap's invalid class
+        // Show SweetAlert for invalid email
+        swal("Validation Error", "Please enter a valid email address", "error");
+        return;
+    } else {
+        $('#Email').removeClass('is-invalid');  // Remove invalid class if valid
+        // Perform further actions (form submission, etc.)
+        swal("Success", "Form submitted successfully!", "success");
+    }
+
     if (!fullName) {
         swal("Validation Error", "Full Name is required!", "error");
         return false;

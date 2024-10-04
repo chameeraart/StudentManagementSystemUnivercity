@@ -72,8 +72,56 @@
         </div>
     </section>
 </div>
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+    }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    .container-fluid {
+        height: 100vh; /* Full screen height */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card {
+        margin: 15px 0;
+    }
+
+    /* Make the table take the full available height */
+    .table-responsive {
+        height: 100%;
+    }
+
+    /* Adjust table styling for better UI */
+    table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #212529;
+        background-color: white;
+    }
+
+        table th, table td {
+            text-align: center;
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        table td {
+            background-color: #f8f9fa;
+        }
+
+        /* Hover effect */
+        table tr:hover {
+            background-color: #d6e9f8;
+        }
+</style>
+@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/studentExamResult.js"></script> <!-- Corrected syntax here -->
 <!-- Include jQuery -->
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -113,4 +161,48 @@
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script> *@
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Include jQuery -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<!-- DataTables CSS and JS -->
+<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<script src="~/dist/js/adminlte.min.js"></script>
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- Summernote CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+
+<!-- Summernote JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+<!-- FancyTable library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>
+<!-- Include jQuery UI -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="/js/studentExamResult.js"></script> <!-- Corrected syntax here -->

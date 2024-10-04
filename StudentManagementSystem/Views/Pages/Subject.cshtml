@@ -46,11 +46,9 @@
                             </div>
                             <!-- /.card-body -->
 
-                            <div class="row">
-                                <div class="col">
+                            <div class="card-footer text-center">
                                     <button type="button" id="savebtn" onclick="saveSubject()" class="btn btn-primary me-2">Save</button>
                                     <button type="button" id="clearbtn" onclick="clearSubject()" class="btn btn-danger">Clear</button>
-                                </div>
                             </div>
 
                             
@@ -115,38 +113,56 @@
         margin: 15px 0;
     }
 
-    /* Make the table take the full available height */
-    .table-responsive {
-        height: 100%;
-    }
-
-    /* Adjust table styling for better UI */
-    table {
+    /* Ensure full width for table */
+    .table {
         width: 100%;
         margin-bottom: 1rem;
         color: #212529;
         background-color: white;
+        table-layout: fixed; /* This ensures even column widths */
     }
 
-        table th, table td {
-            text-align: center;
-            padding: 15px;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        table th {
+        /* Ensure headers are properly aligned and centered */
+        .table th {
             background-color: #007bff;
             color: white;
+            text-align: center; /* Center-align header text */
+            vertical-align: middle;
+            padding: 15px;
+            white-space: nowrap; /* Prevent header text from wrapping */
         }
 
-        table td {
+        /* Adjust table cell styling */
+        .table td {
             background-color: #f8f9fa;
+            text-align: left; /* Center-align table data */
+            vertical-align: middle;
+            padding: 15px;
         }
 
-        /* Hover effect */
-        table tr:hover {
-            background-color: #d6e9f8;
-        }
+    /* Hover effect for rows */
+    .table-hover tbody tr:hover {
+        background-color: #d6e9f8;
+    }
+
+
+    /* Make sure table headers are evenly distributed */
+    .table th, .table td {
+        width: auto;
+        white-space: nowrap;
+    }
+
+    /* Make sure table headers and data cells are aligned properly */
+    .table thead th {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .table td {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
 </style>
 <!-- Include jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
