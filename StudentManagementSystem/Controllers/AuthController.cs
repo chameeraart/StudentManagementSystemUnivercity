@@ -5,6 +5,7 @@ using StudentManagementSystem.Auth;
 using StudentManagementSystem.Models;
 using StudentManagementSystem.Services;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 
 namespace StudentManagementSystem.Controllers
@@ -27,6 +28,8 @@ namespace StudentManagementSystem.Controllers
         public IActionResult Login([FromBody] LoginDto loginDto)
         {
             int studentid = 0;
+            string image = "";
+            string name = "";
             // TODO: Encrypt password
             var user = _context.users
                 .Where(t =>
@@ -51,10 +54,15 @@ namespace StudentManagementSystem.Controllers
             if (user.UserType == StudentManagementSystem.Models.Users.UserTypes.User)
             {
                 studentid= Convert.ToInt32(user.studentId);
+                var student = _context.students.Where(t => t.id == studentid).FirstOrDefault();
+                image = student.PhotoPath;
+                name = student.FullName;
             }
             else
             {
                 studentid = 0;
+                image ="";
+                name = "";
             }
 
             // symmetric security key
@@ -88,6 +96,8 @@ namespace StudentManagementSystem.Controllers
                 userrole = user?.UserType.ToString(),
                 username = user?.username,
                 studentid = studentid,
+                image= image,
+                name = name,
 
             });
         }

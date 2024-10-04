@@ -10,5 +10,7 @@
         public string username { get; set; }
         public string userrole { get; set; }
         public int studentid { get; set; }
+        public string image { get; set; }
+        public string name { get; set; }
     }
 }

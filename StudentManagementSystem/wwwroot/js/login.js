@@ -26,11 +26,14 @@
             data: JSON.stringify(loginDto),
             contentType: "application/json",
             success: function (data) {
+                console.log(data);
                 sessionStorage.setItem("token", data.JWT);
                 sessionStorage.setItem("userrole", data.userrole);
                 sessionStorage.setItem("uid", data.userID);
                 sessionStorage.setItem("username", data.username);
                 sessionStorage.setItem("studentId", data.studentid);
+                sessionStorage.setItem("studentImage", data.image);
+                sessionStorage.setItem("studentName", data.name);
                 window.location.href = "/Home/Index";
             },
             error: function () {
