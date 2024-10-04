@@ -88,6 +88,7 @@ function saveGrade() {
             swal("Success", "Grade saved successfully!", "success");
             loadTable(); // Refresh the table after saving
             clearGrade();
+            location.reload();
         },
         error: function (err) {
             console.error('Error saving grade:', err);

@@ -84,6 +84,7 @@ function saveExam() {
             swal("Success", "Exam saved successfully!", "success");
             clearExam();
             loadExamTable(); // Refresh the table after saving
+            location.reload();
         },
         error: function (err) {
             console.error('Error saving exam:', err);
@@ -188,6 +189,7 @@ function deleteExam(examId) {
         success: function (response) {
             swal("Success", "Exam deleted successfully!", "success");
             loadExamTable(); // Refresh the table after deleting
+            location.reload();
             clearExam();
         },
         error: function (err) {

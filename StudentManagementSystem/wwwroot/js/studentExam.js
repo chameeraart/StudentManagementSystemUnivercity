@@ -252,6 +252,7 @@ function deleteExamMark(markId) {
         success: function (response) {
             swal("Success", "Exam mark deleted successfully!", "success");
             loadExamMarks();
+            location.reload();
         },
         error: function (err) {
             console.error('Error deleting exam mark:', err);
@@ -303,6 +304,7 @@ function saveData() {
         success: function (response) {
             swal("Success", "Exam mark saved successfully!", "success");
             loadExamMarks();
+            location.reload();
         },
         error: function (err) {
             console.error('Error saving exam mark:', err);

@@ -150,6 +150,7 @@ function saveData() {
         data: JSON.stringify(data),
         success: function (response) {
             swal("Success", "Assign Course Subject saved successfully!", "success");
+
         },
         error: function (err) {
             console.error('Error saving data:', err);

@@ -121,6 +121,7 @@ function saveStudent() {
             clearStudentForm();
             loadStudentTable(); // Refresh the table after saving
             getNextStudentIndex();
+            location.reload();
         },
         error: function (err) {
             console.error('Error saving student:', err);
@@ -224,6 +225,7 @@ function deleteStudent(studentId) {
             swal("Success", "Student deleted successfully!", "success");
             loadStudentTable();
             clearStudentForm();
+            location.reload();
         },
         error: function (err) {
             console.error('Error deleting student:', err);

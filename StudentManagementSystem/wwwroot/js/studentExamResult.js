@@ -76,6 +76,7 @@ function deleteassCourse(courseid) {
         success: function (response) {
             swal("Success", "Assign Course Subject deleted successfully!", "success");
             loadSubjectCourse(); // Refresh the table after deleting
+            location.reload();
         },
         error: function (err) {
             console.error('Error deleting assign course:', err);
@@ -244,6 +245,7 @@ function saveData() {
         success: function (response) {
             swal("Success", "Assign Course Subject saved successfully!", "success");
             loadSubjectCourse(); // Refresh the table after saving
+            location.reload();
         },
         error: function (err) {
             console.error('Error saving data:', err);

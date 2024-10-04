@@ -50,6 +50,7 @@ function saveCourse() {
             swal("Success", "Course saved successfully!", "success");
             clearCourse();
             loadTable(); // Refresh the table after saving
+            location.reload();
         },
         error: function (err) {
             console.error('Error saving course:', err);
@@ -148,6 +149,7 @@ function deleteCourse(courseId) {
         success: function (response) {
             swal("Success", "Course deleted successfully!", "success");
             loadTable(); // Refresh the table after deleting
+            location.reload();
         },
         error: function (err) {
             console.error('Error deleting course:', err);
