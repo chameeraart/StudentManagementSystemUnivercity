@@ -86,7 +86,9 @@ namespace StudentManagementSystem.Controllers
             if (studentDto.Photo != null && studentDto.Photo.Length > 0)
             {
                 // Handle file upload
-                var filePath = Path.Combine("wwwroot/images", Path.GetFileName(studentDto.Photo.FileName));
+                var imageFileName = $"{studentDto.Index}_{studentDto.FullName}";
+                // Set the full file path
+                var filePath = Path.Combine("wwwroot/images", imageFileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await studentDto.Photo.CopyToAsync(stream);

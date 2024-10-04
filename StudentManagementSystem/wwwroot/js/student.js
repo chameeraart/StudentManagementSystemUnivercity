@@ -14,6 +14,7 @@ function validateStudentForm() {
     var guardianName = $('#guardian').val();
     var guardianEmail = $('#Email').val();
     var telephone = $('#Telephone').val();
+    var comment = $('#comments').val();
 
     if (!fullName) {
         swal("Validation Error", "Full Name is required!", "error");
@@ -49,6 +50,10 @@ function validateStudentForm() {
     }
     if (!telephone) {
         swal("Validation Error", "Telephone is required!", "error");
+        return false;
+    }
+    if (!comment) {
+        swal("Validation Error", "Comment is required!", "error");
         return false;
     }
 
