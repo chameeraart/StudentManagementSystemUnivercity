@@ -23,7 +23,7 @@ namespace StudentManagementSystem.Services
             MailMessage message = new MailMessage();
             message.From = new MailAddress(fromMail);
             message.Subject = subject;
-            message.To.Add(new MailAddress("chameeramadusankap@gmail.com"));
+            message.To.Add(new MailAddress(toEmail));
             message.Body = body;
             message.IsBodyHtml = true;
 
