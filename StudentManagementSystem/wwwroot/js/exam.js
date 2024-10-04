@@ -106,7 +106,7 @@ function loadExamTable() {
                     <td>${exam.teacherName}</td>
                     <td>${exam.numberOfStudents}</td>
                     <td>${formatDate(exam.examDate)}</td>
-                    <td>${exam.isActive ? 'Yes' : 'No'}</td>
+                    <td>${exam.isActive ? 'No' : 'Yes'}</td>
                     <td><button class="btn btn-warning" onclick="getExam(${exam.id})">Edit</button></td>
                     <td><button class="btn btn-danger" onclick="deleteExam(${exam.id})">Delete</button></td>
                 </tr>`;
