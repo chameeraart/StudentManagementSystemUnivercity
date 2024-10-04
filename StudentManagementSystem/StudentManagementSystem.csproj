@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\images\loginbackground.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\js\studentExamResult.js" />
     <None Include="wwwroot\js\studentExam.js" />
     <None Include="wwwroot\js\assignCourseStudent.js" />

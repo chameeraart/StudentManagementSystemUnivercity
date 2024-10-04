@@ -17,7 +17,7 @@ namespace StudentManagementSystem.Services
         {
             var emailSettings = _configuration.GetSection("EmailSettings");
             string fromMail = emailSettings["Username"];
-            string fromPassword = "tgnz hcrm qltl qmum";
+            string fromPassword = "lkvw bkwf lbfs niqc";
 
 
             MailMessage message = new MailMessage();
