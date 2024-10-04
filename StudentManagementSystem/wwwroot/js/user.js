@@ -17,15 +17,16 @@
 function saveUser() {
     let users = {
         Id: parseInt($('#userId').val()) || 0,
-        username: $('#uname').val(),
-        password: $('#password').val(),
-        UserType: $('#userType').val(),
-        companyid: parseInt($('#companyid').val()) || 0,
-        property_id: parseInt($('#property_id').val()) || 0,
-        isactive: $('#isActive').is(':checked')
+        Username: $('#uname').val(),
+        Password: $('#password').val(),
+        UserType: parseInt($('#userType').val()),
+        Companyid: parseInt($('#companyid').val()) || 0,
+        Property_Id: parseInt($('#property_id').val()) || 0,
+        Isactive: $('#isActive').is(':checked')
     };
 
-    // Perform AJAX request to save user data to the server
+    console.log(users); // Log user object for debugging
+
     $.ajax({
         url: '/user/Create',
         type: "POST",
@@ -35,12 +36,15 @@ function saveUser() {
             swal("Success", "User saved successfully", "success");
             clearUser();
             loadUsers();
+            location.reload();
         },
         error: function (error) {
             swal("Error", "Failed to save user", "error");
         }
     });
 }
+
+
 
 
 function loadUsers() {
@@ -56,8 +60,8 @@ function loadUsers() {
                     <td hidden="hidden">${user.id}</td>
                     <td>${user.username}</td>
                     <td>${user.userType === 100 ? 'Admin' : 'User'}</td>
-                    <td>${user.companyid}</td>
-                    <td>${user.property_id}</td>
+                    <td hidden="hidden">${user.companyid}</td>
+                    <td hidden="hidden">${user.property_id}</td>
                     <td>${user.isactive ? 'Yes' : 'No'}</td>
                     <td><button class="btn btn-sm btn-warning" onclick="editUser(${user.id})">Edit</button></td>
                     <td><button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">Delete</button></td>
@@ -71,7 +75,7 @@ function loadUsers() {
             }
 
             $('#userTable').DataTable({
-                destroy: true,
+                responsive: true,
                 searching: true, // Enable search functionality
                 paging: true, // Enable pagination
                 pageLength: 10, // Number of rows per page
@@ -92,7 +96,7 @@ function loadUsers() {
                         titleAttr: 'CSV',
                         className: 'btn btn-success',
                         exportOptions: {
-                            columns: [1,2,3,4,5] // Select specific columns to export (0-based index)
+                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
                         }
                     },
                     {
@@ -126,6 +130,7 @@ function loadUsers() {
             });
 
 
+
         },
         error: function (error) {
             swal("Error", "Failed to load users", "error");
@@ -139,8 +144,9 @@ function editUser(id) {
         url: `/user/get/${id}`, // Adjust the URL to your server endpoint
         type: 'GET',
         success: function (user) {
+            console.log('user', user);
             $('#userId').val(user.id);
-            $('#username').val(user.username);
+            $('#uname').val(user.username);
             $('#password').val(user.password);
             $('#userType').val(user.userType);
             $('#companyid').val(user.companyid);
@@ -161,6 +167,7 @@ function deleteUser(id) {
         success: function (response) {
             swal("Success", "User deleted successfully", "success");
             loadUsers();
+            location.reload();
         },
         error: function (error) {
             swal("Error", "Failed to delete user", "error");
