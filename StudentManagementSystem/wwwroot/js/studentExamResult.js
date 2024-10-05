@@ -197,7 +197,7 @@ function SendExams() {
 
     // Check if both course and student are selected
     if (!selectedCourse || !selectedStudent) {
-        alert('Please select both a course and a student.');
+        swal("Validation Error", "Please select both a course and a student.", "error");
         return;
     }
 
@@ -212,12 +212,24 @@ function SendExams() {
         contentType: 'application/json',
         data: JSON.stringify(studentExam),
         success: function (response) {
-            var tbody = $('#tbodyid');
+            // Assuming the response indicates success
+            swal("Success", "Email sent successfully!", "success");
+
         },
         error: function (err) {
-            console.error('Error loading table:', err);
+            // Check if the error is related to validation (e.g., missing course or student)
+            if (err.status === 400) { // Assuming 400 indicates a validation error from the server
+                swal("Validation Error", "Please select both a course and a student!", "error");
+            } else {
+                // For other errors, display a general error message
+                swal("Error", "There was an error sending the email. Please try again later.", "error");
+            }
+
+            console.error('Error sending email:', err);
         }
     });
+
+
 
 }
 
