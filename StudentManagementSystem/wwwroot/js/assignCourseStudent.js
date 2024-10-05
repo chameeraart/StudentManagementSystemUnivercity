@@ -35,30 +35,76 @@ function loadStudent() {
     });
 }
 
-function loadSubjectCourse() {
+
+function loadCourseStudent() {
     $.ajax({
-        url: '/AssignCourseStudent/getall',
+        url: '/AssignCourseStudent/getCourseStudent',
         type: 'GET',
         success: function (response) {
             var tbody = $('#tbodyid');
             tbody.empty(); // Clear the table body
+            console.log("response", response);
 
-            // Assuming the array is inside a property called 'courses'
-            var courses = response.courses;
-            if (Array.isArray(courses)) {
-                courses.forEach(function (course) {
+            // It looks like the response is directly an array, not inside a property called 'courses'
+            if (Array.isArray(response)) {
+                response.forEach(function (course) {
+                    console.log('course', course);
                     var row = `<tr>
                                 <td hidden>${course.id}</td>
                                 <td>${course.course.name}</td>
-                                <td hidden>${course.course.id}</td>
-                                <td hidden>${course.student.id}</td>
+                                <td>${course.student.fullName}</td>
                                 <td>${course.isactive ? 'Yes' : 'No'}</td>
                                 <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
                             </tr>`;
                     tbody.append(row);
                 });
+
+                // Initialize DataTables after all rows have been appended
+                if ($.fn.DataTable.isDataTable('#courseTable')) {
+                    $('#courseTable').DataTable().destroy();
+                }
+
+                $('#courseTable').DataTable({
+                    destroy: true,
+                    searching: true, // Enable search functionality
+                    paging: true, // Enable pagination
+                    pageLength: 10, // Number of rows per page
+                    lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                    info: true, // Show table information
+                    dom: 'Bfrtip', // Include buttons for exporting
+                    buttons: [
+                        {
+                            extend: 'csvHtml5',
+                            text: 'Export CSV',
+                            className: 'btn btn-success'
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            text: 'Export Excel',
+                            className: 'btn btn-primary'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: 'Export PDF',
+                            className: 'btn btn-danger'
+                        },
+                        {
+                            extend: 'print',
+                            text: 'Print',
+                            className: 'btn btn-info'
+                        }
+                    ],
+                    language: {
+                        search: "Search records:", // Custom search placeholder
+                        paginate: {
+                            previous: "Prev",
+                            next: "Next"
+                        }
+                    }
+                });
+
             } else {
-                console.error('Expected an array but got:', courses);
+                console.error('Expected an array but got:', response);
             }
         },
         error: function (err) {
@@ -67,13 +113,15 @@ function loadSubjectCourse() {
     });
 }
 
+
+
 function deleteassCourse(courseid) {
     $.ajax({
         url: '/AssignCourseStudent/delete/' + courseid,
         type: 'DELETE',
         success: function (response) {
             swal("Success", "Assign Course Subject deleted successfully!", "success");
-            loadSubjectCourse(); // Refresh the table after deleting
+            loadCourseStudent(); // Refresh the table after deleting
             location.reload();
         },
         error: function (err) {
@@ -105,7 +153,7 @@ function saveData() {
         data: JSON.stringify(data),
         success: function (response) {
             swal("Success", "Assign Course Subject saved successfully!", "success");
-            loadSubjectCourse(); // Refresh the table after saving
+            loadCourseStudent(); // Refresh the table after saving
             location.reload();
         },
         error: function (err) {
@@ -127,44 +175,13 @@ function clearForm() {
 $(document).ready(function () {
     $.noConflict();
 
-    $('#courseTable').DataTable({
-        paging: false, // Disable pagination
-        searching: false, // Keep search functionality
-        ordering: true, // Keep sorting functionality
-        info: false // Optionally, hide the table information
-    });
+    if ($.fn.DataTable.isDataTable('#courseTable')) {
+        $('#courseTable').DataTable().destroy();
+    }
 
     loadTable();
     loadStudent();
-    loadSubjectCourse();
-    ;
+    loadCourseStudent();
 
-    $('#courseDropdown').change(function () {
-        var courseId = $(this).val(); // Get the selected course ID
-        if (courseId > 0) {
-            $.ajax({
-                url: '/AssignCourseStudent/get/' + courseId,
-                type: 'GET',
-                success: function (response) {
-                    var tbody = $('#tbodyid');
-                    tbody.empty(); // Clear the table body
-                    response.forEach(function (course) {
-                        var row = `<tr>
-                            <td hidden>${course.id}</td>
-                            <td>${course.course.name}</td>
-                            <td hidden>${course.course.id}</td>
-                            <td hidden>${course.student.id}</td>
-                             <td>${course.student.fullName}</td>
-                            <td>${course.isactive ? 'Yes' : 'No'}</td>
-                            <td><button class="btn btn-danger" onclick="deleteassCourse(${course.id})">Delete</button></td>
-                        </tr>`;
-                        tbody.append(row);
-                    });
-                },
-                error: function (err) {
-                    console.error('Error fetching course details:', err);
-                }
-            });
-        }
-    });
+
 });

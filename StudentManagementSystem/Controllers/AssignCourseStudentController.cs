@@ -43,6 +43,12 @@ namespace StudentManagementSystem.Controllers
             return new ObjectResult(courseStudent);
         }
 
+        public IActionResult getCourseStudent()
+        {
+            var courseStudent = Context.courseStudents.Include(t => t.Course).Include(t => t.Student).ToList();
+            return new ObjectResult(courseStudent);
+        }
+
         public IActionResult delete(int id)
         {
             var delecourseStudent = Context.courseStudents.FirstOrDefault(s => s.id == id);

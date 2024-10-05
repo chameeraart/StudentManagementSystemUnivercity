@@ -175,7 +175,7 @@ function loadStudentTable() {
                         <td>${student.gender}</td>
                         <td>${student.studentEmail}</td>
                         <td>${student.telephone}</td>
-                        <td>${student.isActive ? 'Yes' : 'No'}</td>
+                        <td>${student.isActive ? 'No' : 'Yes'}</td>
                         <td><button class="btn btn-warning" onclick="getStudent('${student.id}')">Edit</button></td>
                         <td><button class="btn btn-danger" onclick="deleteStudent('${student.id}')">Delete</button></td>
                     </tr>`;
