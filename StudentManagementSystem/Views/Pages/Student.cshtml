@@ -116,6 +116,7 @@
             <button type="button" class="btn btn-outline-secondary rounded-0" onclick="clearStudentForm()">Clear</button>
             <button type="button" class="btn btn-primary rounded-0" onclick="saveStudent()">Submit</button>
         </div>
+    </form>
 
         <div class="row mt-6">
             <div class="col-12">
@@ -149,76 +150,41 @@
                 </div>
             </div>
         </div>
-    </form>
-</div>
 
-<style>
-    body, html {
-        height: 100%;
-        margin: 0;
-    }
 
-    .container-fluid {
-        height: 100vh; /* Full screen height */
-        display: flex;
-        flex-direction: column;
-    }
 
-    .card {
-        margin: 15px 0;
-    }
+    <!-- Custom CSS -->
+    <style>
+      
+            /* Ensure headers are properly aligned and centered */
+            .table th {
+                background-color: #007bff;
+                color: white;
+                text-align: center; /* Center-align header text */
+                vertical-align: middle;
+                padding: 15px;
+                white-space: nowrap; /* Prevent header text from wrapping */
+            }
 
-    /* Ensure full width for table */
-    .table {
-        width: 100%;
-        margin-bottom: 1rem;
-        color: #212529;
-        background-color: white;
-        table-layout: fixed; /* This ensures even column widths */
-    }
-
-        /* Ensure headers are properly aligned and centered */
-        .table th {
-            background-color: #007bff;
-            color: white;
-            text-align: center; /* Center-align header text */
-            vertical-align: middle;
-            padding: 15px;
-            white-space: nowrap; /* Prevent header text from wrapping */
+        /* Hover effect for rows */
+        .table-hover tbody tr:hover {
+            background-color: #d6e9f8;
         }
 
-        /* Adjust table cell styling */
-        .table td {
-            background-color: #f8f9fa;
-            text-align: left; /* Center-align table data */
-            vertical-align: middle;
-            padding: 15px;
+
+        /* Make sure table headers are evenly distributed */
+        .table th, .table td {
+            width: auto;
+            white-space: nowrap;
         }
 
-    /* Hover effect for rows */
-    .table-hover tbody tr:hover {
-        background-color: #d6e9f8;
-    }
+        /* Make sure table headers and data cells are aligned properly */
+        .table thead th {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
 
-
-    /* Make sure table headers are evenly distributed */
-    .table th, .table td {
-        width: auto;
-        white-space: nowrap;
-    }
-
-    /* Make sure table headers and data cells are aligned properly */
-    .table thead th {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    .table td {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-</style>
+    </style>
 
 <script>
     function previewImage(event) {
