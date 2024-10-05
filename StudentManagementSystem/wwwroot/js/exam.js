@@ -130,22 +130,34 @@ function loadExamTable() {
                     {
                         extend: 'csvHtml5',
                         text: 'Export CSV',
-                        className: 'btn btn-success'
+                        className: 'btn btn-success',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                        }
                     },
                     {
                         extend: 'excelHtml5',
                         text: 'Export Excel',
-                        className: 'btn btn-primary'
+                        className: 'btn btn-primary',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                        }
                     },
                     {
                         extend: 'pdfHtml5',
                         text: 'Export PDF',
-                        className: 'btn btn-danger'
+                        className: 'btn btn-danger',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                        }
                     },
                     {
                         extend: 'print',
                         text: 'Print',
-                        className: 'btn btn-info'
+                        className: 'btn btn-info',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                        }
                     }
                 ],
                 language: {
