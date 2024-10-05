@@ -107,6 +107,11 @@ function loadTable() {
                 tbody.append(row);
             });
 
+            // Initialize DataTables with export buttons
+            if ($.fn.DataTable.isDataTable('#tableID')) {
+                $('#tableID').DataTable().destroy();
+            }
+
             $('#tableID').DataTable({
                 destroy: true,
                 searching: true, // Enable search functionality
@@ -120,7 +125,47 @@ function loadTable() {
                         previous: "Prev",
                         next: "Next"
                     }
-                }
+                },
+                dom: 'Bfrtip', // Include export buttons
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        titleAttr: 'CSV',
+                        className: 'btn btn-success',
+                        exportOptions: {
+                            columns: [1, 2, 4, 6] // Select specific columns to export
+                        }
+
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Export Excel',
+                        titleAttr: 'Excel',
+                        className: 'btn btn-primary',
+                        exportOptions: {
+                            columns: [1, 2, 4, 6] // Select specific columns to export
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        titleAttr: 'PDF',
+                        className: 'btn btn-danger',
+                        exportOptions: {
+                            columns: [1, 2, 4, 6] // Select specific columns to export
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        titleAttr: 'Print',
+                        className: 'btn btn-info',
+                        exportOptions: {
+                            columns: [1, 2, 4, 6] // Select specific columns to export
+                        }
+                    }
+                ]
             });
         },
 

@@ -97,7 +97,7 @@
                     
                      <tr>
                         <th>Grade</th>
-                        <td>{graade}%</td>
+                        <td>{graade}</td>
                     </tr>
 
                 </table>

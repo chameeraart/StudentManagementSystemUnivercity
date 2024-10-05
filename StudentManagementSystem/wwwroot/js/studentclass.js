@@ -1,4 +1,10 @@
 ﻿$(document).ready(function () {
+    $.noConflict();
+
+    // Check if DataTable is already initialized and destroy it if necessary
+    if ($.fn.DataTable.isDataTable('#classTable')) {
+        $('#classTable').DataTable().destroy();
+    }
     loadTable();
 });
 
@@ -102,6 +108,68 @@ function loadTable() {
                     <td><button class="btn btn-danger" onclick="deleteClass(${studentclass.id})">Delete</button></td>
                 </tr>`;
                 tbody.append(row);
+
+
+                // Initialize DataTables with export buttons
+                if ($.fn.DataTable.isDataTable('#classTable')) {
+                    $('#classTable').DataTable().destroy();
+                }
+
+                $('#classTable').DataTable({
+                    destroy: true,
+                    searching: true, // Enable search functionality
+                    paging: true, // Enable pagination
+                    pageLength: 10, // Number of rows per page
+                    lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                    info: true, // Show table information
+                    language: {
+                        search: "Search records:", // Custom search placeholder
+                        paginate: {
+                            previous: "Prev",
+                            next: "Next"
+                        }
+                    },
+                    dom: 'Bfrtip', // Include export buttons
+                    buttons: [
+                        {
+                            extend: 'csvHtml5',
+                            text: 'Export CSV',
+                            titleAttr: 'CSV',
+                            className: 'btn btn-success',
+                            exportOptions: {
+                                columns: [1, 2, 3,4,5, 6] // Select specific columns to export
+                            }
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            text: 'Export Excel',
+                            titleAttr: 'Excel',
+                            className: 'btn btn-primary',
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6] // Select specific columns to export
+                            }
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: 'Export PDF',
+                            titleAttr: 'PDF',
+                            className: 'btn btn-danger',
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6] // Select specific columns to export
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: 'Print',
+                            titleAttr: 'Print',
+                            className: 'btn btn-info',
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6] // Select specific columns to export
+                            }
+                        }
+                    ]
+                });
+
             });
         },
         error: function (err) {

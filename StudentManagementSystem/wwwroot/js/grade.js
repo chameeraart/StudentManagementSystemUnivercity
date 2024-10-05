@@ -142,25 +142,37 @@ function loadTable() {
                         extend: 'csvHtml5',
                         text: 'Export CSV',
                         titleAttr: 'CSV',
-                        className: 'btn btn-success'
+                        className: 'btn btn-success',
+                        exportOptions: {
+                            columns: [1, 2, 3,4, 5] // Select specific columns to export
+                        }
                     },
                     {
                         extend: 'excelHtml5',
                         text: 'Export Excel',
                         titleAttr: 'Excel',
-                        className: 'btn btn-primary'
+                        className: 'btn btn-primary',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                        }
                     },
                     {
                         extend: 'pdfHtml5',
                         text: 'Export PDF',
                         titleAttr: 'PDF',
-                        className: 'btn btn-danger'
+                        className: 'btn btn-danger',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                        }
                     },
                     {
                         extend: 'print',
                         text: 'Print',
                         titleAttr: 'Print',
-                        className: 'btn btn-info'
+                        className: 'btn btn-info',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                        }
                     }
                 ]
             });

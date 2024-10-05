@@ -96,7 +96,7 @@ function loadUsers() {
                         titleAttr: 'CSV',
                         className: 'btn btn-success',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                            columns: [1, 2, 5] // Select specific columns to export
                         }
                     },
                     {
@@ -105,7 +105,7 @@ function loadUsers() {
                         titleAttr: 'Excel',
                         className: 'btn btn-primary',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                            columns: [1, 2, 5] // Select specific columns to export
                         }
                     },
                     {
@@ -114,7 +114,7 @@ function loadUsers() {
                         titleAttr: 'PDF',
                         className: 'btn btn-danger',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5] // Select specific columns to export
+                            columns: [1, 2, 5] // Select specific columns to export
                         }
                     },
                     {
@@ -123,7 +123,7 @@ function loadUsers() {
                         titleAttr: 'Print',
                         className: 'btn btn-info',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5] // Select specific columns to print
+                            columns: [1, 2, 5] // Select specific columns to print
                         }
                     }
                 ]
