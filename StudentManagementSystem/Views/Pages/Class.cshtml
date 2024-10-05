@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="teacherName">Lecture Name</label>
-                                    <input type="text" class="form-control" id="teacherName" placeholder="Enter Teacher name" autocomplete="off">
+                                    <input type="text" class="form-control" id="teacherName" placeholder="Enter Lecture name" autocomplete="off">
                                 </div>
                                 <div class="form-group">
                                     <label for="numberOfStudents">Number of Students</label>
@@ -105,51 +105,53 @@
         margin-bottom: 1rem;
         color: #212529;
         background-color: white;
-        table-layout: fixed; /* This ensures even column widths */
+        table-layout: auto; /* Automatically adjust column widths based on content */
+        border-collapse: collapse; /* Remove gaps between table cells */
     }
 
-        /* Ensure headers are properly aligned and centered */
-        .table th {
-            background-color: #007bff;
-            color: white;
-            text-align: center; /* Center-align header text */
-            vertical-align: middle;
-            padding: 15px;
-            white-space: nowrap; /* Prevent header text from wrapping */
-        }
+    /* Ensure headers are properly aligned and centered */
+    .table th {
+        background-color: #007bff;
+        color: white;
+        text-align: center; /* Center-align header text */
+        vertical-align: middle;
+        padding: 15px;
+        white-space: nowrap; /* Prevent header text from wrapping */
+        box-sizing: border-box; /* Ensure padding is included in width calculation */
+        border: none;
+    }
 
-        /* Adjust table cell styling */
-        .table td {
-            background-color: #f8f9fa;
-            text-align: left; /* Center-align table data */
-            vertical-align: middle;
-            padding: 15px;
-        }
+    /* Adjust table cell styling */
+    .table td {
+        background-color: #f8f9fa;
+        text-align: left; /* Align table data to the left */
+        vertical-align: middle; /* Vertically center the text */
+        padding: 15px;
+        box-sizing: border-box; /* Ensure padding is included in width calculation */
+        word-wrap: break-word; /* Allow wrapping of long words */
+        word-break: break-word; /* Break long words if necessary */
+        white-space: normal; /* Allow text to wrap in cells */
+        border-bottom: 1px solid #ddd; /* Add a bottom border for row lines */
+    }
 
     /* Hover effect for rows */
     .table-hover tbody tr:hover {
         background-color: #d6e9f8;
     }
 
-
-    /* Make sure table headers are evenly distributed */
+    /* Ensure table headers and data cells are aligned properly */
     .table th, .table td {
-        width: auto;
-        white-space: nowrap;
+        border-collapse: collapse; /* Remove inner borders */
     }
 
-    /* Make sure table headers and data cells are aligned properly */
-    .table thead th {
-        padding-left: 10px;
-        padding-right: 10px;
+        .table th {
+            font-size: 16px;
+            padding: 8px;
+        }
     }
-
-    .table td {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
 </style>
+
+
 
 <!-- Include jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
