@@ -43,6 +43,7 @@ function saveClass() {
             swal("Success", "Class saved successfully!", "success");
             clearClass();
             loadTable(); // Refresh the table after saving
+            location.reload();
         },
         error: function (err) {
             console.error('Error saving class:', err);
@@ -95,81 +96,80 @@ function loadTable() {
         success: function (response) {
             var tbody = $('#tbodyid');
             tbody.empty(); // Clear the table body
+
             response.forEach(function (studentclass) {
                 var row = `<tr>
                     <td hidden>${studentclass.id}</td>
                     <td>${studentclass.name}</td>
                     <td>${studentclass.teacherName}</td>
                     <td>${studentclass.numberOfStudents}</td>
-                   <td>${formatDate(studentclass.startDate)}</td>
+                    <td>${formatDate(studentclass.startDate)}</td>
                     <td>${formatDate(studentclass.endDate)}</td>
                     <td>${studentclass.isActive ? 'No' : 'Yes'}</td>
                     <td><button class="btn btn-warning" onclick="getClass(${studentclass.id})">Edit</button></td>
                     <td><button class="btn btn-danger" onclick="deleteClass(${studentclass.id})">Delete</button></td>
                 </tr>`;
                 tbody.append(row);
+            });
 
+            // Initialize DataTables with export buttons after all rows have been appended
+            if ($.fn.DataTable.isDataTable('#classTable')) {
+                $('#classTable').DataTable().destroy(); // Destroy previous instance if exists
+            }
 
-                // Initialize DataTables with export buttons
-                if ($.fn.DataTable.isDataTable('#classTable')) {
-                    $('#classTable').DataTable().destroy();
-                }
-
-                $('#classTable').DataTable({
-                    destroy: true,
-                    searching: true, // Enable search functionality
-                    paging: true, // Enable pagination
-                    pageLength: 10, // Number of rows per page
-                    lengthMenu: [5, 10, 20, 50], // Options for rows per page
-                    info: true, // Show table information
-                    language: {
-                        search: "Search records:", // Custom search placeholder
-                        paginate: {
-                            previous: "Prev",
-                            next: "Next"
+            $('#classTable').DataTable({
+                destroy: true,
+                searching: true, // Enable search functionality
+                paging: true, // Enable pagination
+                pageLength: 10, // Number of rows per page
+                lengthMenu: [5, 10, 20, 50], // Options for rows per page
+                info: true, // Show table information
+                language: {
+                    search: "Search records:", // Custom search placeholder
+                    paginate: {
+                        previous: "Prev",
+                        next: "Next"
+                    }
+                },
+                dom: 'Bfrtip', // Include export buttons
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        titleAttr: 'CSV',
+                        className: 'btn btn-success',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 6] // Select specific columns to export
                         }
                     },
-                    dom: 'Bfrtip', // Include export buttons
-                    buttons: [
-                        {
-                            extend: 'csvHtml5',
-                            text: 'Export CSV',
-                            titleAttr: 'CSV',
-                            className: 'btn btn-success',
-                            exportOptions: {
-                                columns: [1, 2, 3,4,5, 6] // Select specific columns to export
-                            }
-                        },
-                        {
-                            extend: 'excelHtml5',
-                            text: 'Export Excel',
-                            titleAttr: 'Excel',
-                            className: 'btn btn-primary',
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6] // Select specific columns to export
-                            }
-                        },
-                        {
-                            extend: 'pdfHtml5',
-                            text: 'Export PDF',
-                            titleAttr: 'PDF',
-                            className: 'btn btn-danger',
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6] // Select specific columns to export
-                            }
-                        },
-                        {
-                            extend: 'print',
-                            text: 'Print',
-                            titleAttr: 'Print',
-                            className: 'btn btn-info',
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6] // Select specific columns to export
-                            }
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Export Excel',
+                        titleAttr: 'Excel',
+                        className: 'btn btn-primary',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 6] // Select specific columns to export
                         }
-                    ]
-                });
-
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        titleAttr: 'PDF',
+                        className: 'btn btn-danger',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 6] // Select specific columns to export
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        titleAttr: 'Print',
+                        className: 'btn btn-info',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 6] // Select specific columns to export
+                        }
+                    }
+                ]
             });
         },
         error: function (err) {
@@ -177,6 +177,7 @@ function loadTable() {
         }
     });
 }
+
 function getClass(courseId) {
     $.ajax({
         url: '/class/get/' + courseId,
@@ -214,6 +215,7 @@ function deleteClass(classId) {
         success: function (response) {
             swal("Success", "Class deleted successfully!", "success");
             loadTable(); // Refresh the table after deleting
+            location.reload();
         },
         error: function (err) {
             console.error('Error deleting class:', err);
