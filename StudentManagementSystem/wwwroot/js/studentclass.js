@@ -103,7 +103,7 @@ function loadTable() {
                     <td>${studentclass.numberOfStudents}</td>
                    <td>${formatDate(studentclass.startDate)}</td>
                     <td>${formatDate(studentclass.endDate)}</td>
-                    <td>${studentclass.isActive ? 'Yes' : 'No'}</td>
+                    <td>${studentclass.isActive ? 'No' : 'Yes'}</td>
                     <td><button class="btn btn-warning" onclick="getClass(${studentclass.id})">Edit</button></td>
                     <td><button class="btn btn-danger" onclick="deleteClass(${studentclass.id})">Delete</button></td>
                 </tr>`;
