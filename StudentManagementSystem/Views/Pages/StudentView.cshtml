@@ -64,6 +64,7 @@
 </script>
 <!-- Custom CSS -->
 <style>
+<style>
     body, html {
         height: 100%;
         margin: 0;
@@ -85,40 +86,56 @@
         margin-bottom: 1rem;
         color: #212529;
         background-color: white;
-        table-layout: fixed; /* This ensures even column widths */
+        table-layout: auto; /* Flexible column widths */
+        border-collapse: collapse;
     }
 
-        /* Ensure headers are properly aligned and centered */
-        .table th {
-            background-color: #007bff;
-            color: white;
-            text-align: center; /* Center-align header text */
-            vertical-align: middle;
-            padding: 15px;
-            white-space: nowrap; /* Prevent header text from wrapping */
-        }
+    /* Ensure headers are properly aligned and centered */
+    .table th {
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        vertical-align: middle;
+        padding: 15px;
+        white-space: nowrap; /* Prevent header text from wrapping */
+        overflow: hidden; /* Hide overflowed text */
+        text-overflow: ellipsis; /* Add ellipsis if content overflows */
+    }
 
-        /* Adjust table cell styling */
-        .table td {
-            background-color: #f8f9fa;
-            text-align: left; /* Center-align table data */
-            vertical-align: middle;
-            padding: 15px;
-        }
+    /* Adjust table cell styling */
+    .table td {
+        background-color: #f8f9fa;
+        text-align: left;
+        vertical-align: middle;
+        padding: 10px;
+        white-space: normal; /* Let long text wrap inside the cell */
+        word-wrap: break-word; /* Allow text to wrap inside the cell */
+        word-break: break-word; /* Break long words if needed */
+        overflow: hidden; /* Hide overflowed content */
+    }
+
+    /* Set a max width for certain columns to prevent long text from breaking the layout */
+    .table td:nth-child(2), /* For Full Name */
+    .table td:nth-child(3), /* For Date of Birth */
+    .table td:nth-child(4), /* For Gender */
+    .table td:nth-child(5), /* For Student Email */
+    .table td:nth-child(6) { /* For Telephone */
+        max-width: 200px; /* Set appropriate max width */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+        word-break: break-word; /* Ensure long words wrap inside the cell */
+    }
 
     /* Hover effect for rows */
     .table-hover tbody tr:hover {
         background-color: #d6e9f8;
     }
 
-
-    /* Make sure table headers are evenly distributed */
+    /* Make sure table headers and data cells are aligned properly */
     .table th, .table td {
-        width: auto;
-        white-space: nowrap;
+        white-space: nowrap; /* Prevent wrapping in headers and cells by default */
     }
 
-    /* Make sure table headers and data cells are aligned properly */
     .table thead th {
         padding-left: 10px;
         padding-right: 10px;
@@ -128,6 +145,36 @@
         padding-left: 10px;
         padding-right: 10px;
     }
+
+    /* Additional styling for DataTable pagination */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0.5em 1em;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        margin-left: 5px;
+        border-radius: 5px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background-color: #0056b3;
+        color: white;
+    }
+
+
+
+        .table th {
+            font-size: 12px;
+            padding: 8px;
+        }
+
+        /* Adjust button sizes in smaller screens */
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 0.4em 0.8em;
+        }
+    }
+</style>
+
 
 </style>
 <!-- Include jQuery -->
