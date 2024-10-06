@@ -152,39 +152,50 @@
         </div>
 
 
-
-    <!-- Custom CSS -->
     <style>
-      
-            /* Ensure headers are properly aligned and centered */
-            .table th {
-                background-color: #007bff;
-                color: white;
-                text-align: center; /* Center-align header text */
-                vertical-align: middle;
-                padding: 15px;
-                white-space: nowrap; /* Prevent header text from wrapping */
-            }
+        /* Ensure headers are properly aligned and centered */
+        .table th {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px;
+            white-space: nowrap; /* Prevent header text from wrapping */
+         /*    border: 1px solid #dee2e6; /* Border for table header */ */
+        }
+
+        /* Style for table data with only horizontal borders */
+        .table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px;
+            white-space: nowrap; /* Prevent data from wrapping */
+            border-top: 1px solid #dee2e6; /* Top border for horizontal lines */
+            border-bottom: 1px solid #dee2e6; /* Bottom border for horizontal lines */
+            border-left: none; /* No left border */
+            border-right: none; /* No right border */
+        }
 
         /* Hover effect for rows */
         .table-hover tbody tr:hover {
-            background-color: #d6e9f8;
+            background-color: #f8f9fa; /* Light grey background on hover */
         }
 
-
-        /* Make sure table headers are evenly distributed */
-        .table th, .table td {
-            width: auto;
-            white-space: nowrap;
+        /* Optional: Alternating row colors */
+        .table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
         }
 
-        /* Make sure table headers and data cells are aligned properly */
-        .table thead th {
-            padding-left: 10px;
-            padding-right: 10px;
+        .table tbody tr:nth-child(even) {
+            background-color: #ffffff;
         }
-
     </style>
+
+
+
+
+
+
 
 <script>
     function previewImage(event) {
