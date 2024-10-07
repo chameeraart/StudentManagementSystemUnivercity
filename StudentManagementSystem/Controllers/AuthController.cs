@@ -55,7 +55,7 @@ namespace StudentManagementSystem.Controllers
             {
                 studentid= Convert.ToInt32(user.studentId);
                 var student = _context.students.Where(t => t.id == studentid).FirstOrDefault();
-                image = student.PhotoPath;
+                image = "";
                 name = student.FullName;
             }
             else
